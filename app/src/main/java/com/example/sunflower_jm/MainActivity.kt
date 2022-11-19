@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.databinding.ActivityMainBinding
+import com.example.sunflower_jm.databinding.ActivityMainBinding.bind
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
-import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 

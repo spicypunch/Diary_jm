@@ -3,8 +3,10 @@
     <string name="title">제목</string>
     <string name="content">내용</string>
     <string name="completion">완료</string>
+    <string name="update_completion">수정 완료</string>
     <string name="insert_title">제목을 입력하시오</string>
     <string name="insert_content">내용을 입력하시오</string>
     <string name="add_image">사진 추가</string>
     <string name="add_item">내용 추가</string>
+    <string name="update_item">내용 수정</string>
 </resources>

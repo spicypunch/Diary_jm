@@ -30,7 +30,6 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun insertItem() {
-
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
 

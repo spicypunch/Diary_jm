@@ -44,13 +44,12 @@ class DetailActivity : AppCompatActivity(){
         detail_title.text = title
         detail_content.text = content
 
-        binding.delete.setOnClickListener {
-            deleteItem()
+        binding.update.setOnClickListener {
+            updateItem()
         }
     }
 
-    private fun deleteItem() {
-        id = intent.getSerializableExtra("id") as Int
+    private fun updateItem() {
         title = intent.getSerializableExtra("title") as String
         content = intent.getSerializableExtra("content") as String
         Log.e("delete item1", id.toString())

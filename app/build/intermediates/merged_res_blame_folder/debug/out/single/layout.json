@@ -1,22 +1,30 @@
 [
     {
-        "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/add_item.xml",
-        "source": "com.example.sunflower_jm.app-main-32:/layout/add_item.xml"
+        "merged": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-mergeDebugResources-29:\\layout\\add_item.xml",
+        "source": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-main-32:\\layout\\add_item.xml"
     },
     {
-        "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/activity_main.xml",
-        "source": "com.example.sunflower_jm.app-main-32:/layout/activity_main.xml"
+        "merged": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-mergeDebugResources-29:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-main-32:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/fragment_main.xml",
-        "source": "com.example.sunflower_jm.app-main-32:/layout/fragment_main.xml"
+        "merged": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-mergeDebugResources-29:\\layout\\detail_view.xml",
+        "source": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-main-32:\\layout\\detail_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-mergeDebugResources-29:\\layout\\item.xml",
+        "source": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-main-32:\\layout\\item.xml"
     },
     {
         "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/detail_view.xml",
         "source": "com.example.sunflower_jm.app-main-32:/layout/detail_view.xml"
     },
     {
-        "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/item.xml",
-        "source": "com.example.sunflower_jm.app-main-32:/layout/item.xml"
+        "merged": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-mergeDebugResources-29:\\layout\\fragment_main.xml",
+        "source": "C:\\Users\\minig\\.gradle\\daemon\\7.3.3\\com.example.sunflower_jm.app-main-32:\\layout\\fragment_main.xml"
+    },
+    {
+        "merged": "com.example.sunflower_jm.app-mergeDebugResources-29:/layout/update_item.xml",
+        "source": "com.example.sunflower_jm.app-main-32:/layout/update_item.xml"
     }
 ]

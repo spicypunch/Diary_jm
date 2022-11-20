@@ -21,6 +21,8 @@
     <string name="insert_content">내용을 입력하시오</string>
     <string name="insert_title">제목을 입력하시오</string>
     <string name="title">제목</string>
+    <string name="update_completion">수정 완료</string>
+    <string name="update_item">내용 수정</string>
     <style name="Theme.SunFlower_jm" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
         <item name="colorPrimary">@color/purple_500</item>

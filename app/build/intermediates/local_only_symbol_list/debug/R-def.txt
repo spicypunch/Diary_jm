@@ -21,8 +21,8 @@ id add_item_title
 id appbar
 id btn_addImage
 id btn_completion
+id btn_update_completion
 id constraintLayout
-id delete
 id detail_content
 id detail_image
 id detail_title
@@ -35,11 +35,14 @@ id item_title
 id recyclerView
 id section_label
 id tabs
+id update
+id update_item_title
 layout activity_main
 layout add_item
 layout detail_view
 layout fragment_main
 layout item
+layout update_item
 mipmap diary
 mipmap ic_launcher
 mipmap ic_launcher_foreground
@@ -52,6 +55,8 @@ string content
 string insert_content
 string insert_title
 string title
+string update_completion
+string update_item
 style Theme.SunFlower_jm
 xml backup_rules
 xml data_extraction_rules

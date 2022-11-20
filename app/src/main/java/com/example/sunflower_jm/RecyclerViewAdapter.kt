@@ -26,7 +26,6 @@ class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>, priv
             Log.e("title, content", item.title)
 
             itemView.setOnClickListener {
-                Log.e("id", item.id.toString())
                 Intent(root.context, DetailActivity::class.java).apply {
                     putExtra("id", item.id)
                     putExtra("title", item.title)

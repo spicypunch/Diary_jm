@@ -2749,6 +2749,7 @@ id bounceEnd
 id bounceStart
 id btn_addImage
 id btn_completion
+id btn_update_completion
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -2794,7 +2795,6 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
-id delete
 id deltaRelative
 id dependency_ordering
 id design_bottom_sheet
@@ -3122,6 +3122,8 @@ id unchecked
 id uniform
 id unlabeled
 id up
+id update
+id update_item_title
 id useLogo
 id vertical_only
 id view_offset_helper
@@ -3342,6 +3344,7 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+layout update_item
 mipmap diary
 mipmap ic_launcher
 mipmap ic_launcher_foreground
@@ -3496,6 +3499,8 @@ string path_password_strike_through
 string search_menu_title
 string status_bar_notification_info_overflow
 string title
+string update_completion
+string update_item
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

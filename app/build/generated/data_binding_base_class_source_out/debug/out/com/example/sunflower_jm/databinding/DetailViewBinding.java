@@ -22,9 +22,6 @@ public final class DetailViewBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final FloatingActionButton delete;
-
-  @NonNull
   public final TextView detailContent;
 
   @NonNull
@@ -33,14 +30,17 @@ public final class DetailViewBinding implements ViewBinding {
   @NonNull
   public final TextView detailTitle;
 
-  private DetailViewBinding(@NonNull ConstraintLayout rootView,
-      @NonNull FloatingActionButton delete, @NonNull TextView detailContent,
-      @NonNull ImageView detailImage, @NonNull TextView detailTitle) {
+  @NonNull
+  public final FloatingActionButton update;
+
+  private DetailViewBinding(@NonNull ConstraintLayout rootView, @NonNull TextView detailContent,
+      @NonNull ImageView detailImage, @NonNull TextView detailTitle,
+      @NonNull FloatingActionButton update) {
     this.rootView = rootView;
-    this.delete = delete;
     this.detailContent = detailContent;
     this.detailImage = detailImage;
     this.detailTitle = detailTitle;
+    this.update = update;
   }
 
   @Override
@@ -70,12 +70,6 @@ public final class DetailViewBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.delete;
-      FloatingActionButton delete = ViewBindings.findChildViewById(rootView, id);
-      if (delete == null) {
-        break missingId;
-      }
-
       id = R.id.detail_content;
       TextView detailContent = ViewBindings.findChildViewById(rootView, id);
       if (detailContent == null) {
@@ -94,8 +88,14 @@ public final class DetailViewBinding implements ViewBinding {
         break missingId;
       }
 
-      return new DetailViewBinding((ConstraintLayout) rootView, delete, detailContent, detailImage,
-          detailTitle);
+      id = R.id.update;
+      FloatingActionButton update = ViewBindings.findChildViewById(rootView, id);
+      if (update == null) {
+        break missingId;
+      }
+
+      return new DetailViewBinding((ConstraintLayout) rootView, detailContent, detailImage,
+          detailTitle, update);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

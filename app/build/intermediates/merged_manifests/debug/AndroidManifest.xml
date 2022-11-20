@@ -22,6 +22,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.SunFlower_jm" >
         <activity
+            android:name="com.example.sunflower_jm.UpdateItemActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.sunflower_jm.DetailActivity"
             android:exported="true" />
         <activity

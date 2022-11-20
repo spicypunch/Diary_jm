@@ -1,15 +1,17 @@
 package com.example.sunflower_jm
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sunflower_jm.databinding.ItemBinding
 import com.example.sunflower_jm.db.SunFlowerEntity
 
-class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>) :
+class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>, private val listener : OnItemLongClickListener) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     class MyViewHolder(binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -26,6 +28,7 @@ class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>) :
             itemView.setOnClickListener {
                 Log.e("id", item.id.toString())
                 Intent(root.context, DetailActivity::class.java).apply {
+                    putExtra("id", item.id)
                     putExtra("title", item.title)
                     putExtra("content", item.content)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -45,6 +48,13 @@ class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>) :
         holder.item_title.text = sunflowerData.title
         holder.item_content.text = sunflowerData.content
         holder.bind(sunflowerData)
+
+        //false가 들어가는 이유?
+        holder.root.setOnLongClickListener {
+            listener.onLongClick(position)
+            false
+        }
+
     }
 
     override fun getItemCount(): Int = itemList.size

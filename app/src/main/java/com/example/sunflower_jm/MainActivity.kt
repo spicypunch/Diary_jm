@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.databinding.ActivityMainBinding
+import com.example.sunflower_jm.databinding.ActivityMainBinding.bind
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
-import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var db : AppDatabase
+    private lateinit var db: AppDatabase
     private lateinit var sunflowerDao: SunFlowerDao
     private lateinit var sunflowerList: ArrayList<SunFlowerEntity>
     private lateinit var adapter: RecyclerViewAdapter
@@ -31,16 +31,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        binding.recyclerView.setOnClickListener {
-//            val intent = Intent(this, DetailActivity::class.java)
-//            startActivity(intent)
-//        }
-
         db = AppDatabase.getInstance(this)!!
         sunflowerDao = db.getSunFlowerDao()
 
         getAllItemList()
     }
+
     private fun getAllItemList() {
         Thread {
             sunflowerList = ArrayList(sunflowerDao.getAll())
@@ -48,11 +44,12 @@ class MainActivity : AppCompatActivity() {
             setRecyclerView()
         }.start()
     }
+
     private fun setRecyclerView() {
         runOnUiThread {
             adapter = RecyclerViewAdapter(sunflowerList)
             binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = GridLayoutManager(this,2)
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         }
     }
 

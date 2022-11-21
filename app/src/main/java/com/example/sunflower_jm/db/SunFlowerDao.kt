@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface SunFlowerDao {
@@ -15,4 +16,9 @@ interface SunFlowerDao {
 
     @Delete
     fun deleteItem(item: SunFlowerEntity)
+
+    @Update
+    fun updateItem(item: SunFlowerEntity)
+
+//    @Query("DELETE FROM SunFlowerEntity WHERE id = ")
 }

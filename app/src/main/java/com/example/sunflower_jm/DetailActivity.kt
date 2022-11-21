@@ -52,4 +52,21 @@ class DetailActivity : AppCompatActivity(){
             startActivity(intent)
         }
     }
+
+    private fun updateItem() {
+        title = intent.getSerializableExtra("title") as String
+        content = intent.getSerializableExtra("content") as String
+        Log.e("delete item1", id.toString())
+        Log.e("delete item2", title)
+        Log.e("delete item3", content)
+
+        Thread {
+            sunFlowerDao.deleteItem(SunFlowerEntity(id, title, content))
+            runOnUiThread {
+                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }.start()
+    }
+
 }

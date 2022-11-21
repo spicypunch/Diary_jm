@@ -7,16 +7,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
 
+const val title = ""
+
 class MainActivity : AppCompatActivity(), OnItemLongClickListener {
-
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var db : AppDatabase
     private lateinit var sunflowerDao: SunFlowerDao
     private lateinit var sunflowerList: ArrayList<SunFlowerEntity>
@@ -32,11 +33,16 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             startActivity(intent)
         }
 
+//        if (savedInstanceState != null) {
+//            textView.text = savedInstanceState.getString("")
+//        }
+
         db = AppDatabase.getInstance(this)!!
         sunflowerDao = db.getSunFlowerDao()
 
         getAllItemList()
     }
+
     private fun getAllItemList() {
         Thread {
             sunflowerList = ArrayList(sunflowerDao.getAll())
@@ -44,6 +50,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             setRecyclerView()
         }.start()
     }
+
     private fun setRecyclerView() {
         runOnUiThread {
             //this의 의미?
@@ -66,6 +73,11 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
         builder.show()
     }
 
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        outState.putString()
+//        super.onSaveInstanceState(outState)
+//    }
+
     private fun deleteItem(position: Int) {
         Thread {
             sunflowerDao.deleteItem(sunflowerList[position])
@@ -76,8 +88,10 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             }
         }.start()
     }
+
     override fun onRestart() {
         super.onRestart()
         getAllItemList()
+//        adapter.notifyDataSetChanged()
     }
 }

@@ -1,12 +1,9 @@
 package com.example.sunflower_jm
 
-import android.content.ContentResolver
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sunflower_jm.databinding.ItemBinding
 import com.example.sunflower_jm.db.SunFlowerEntity
@@ -53,7 +50,6 @@ class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>, priv
             listener.onLongClick(position)
             false
         }
-
     }
 
     override fun getItemCount(): Int = itemList.size

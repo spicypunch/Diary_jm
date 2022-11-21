@@ -1,5 +1,6 @@
 package com.example.sunflower_jm
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -39,13 +40,16 @@ class DetailActivity : AppCompatActivity(){
 
         title = intent.getSerializableExtra("title") as String
         content = intent.getSerializableExtra("content") as String
-
+        id = intent.getSerializableExtra("id") as Int
 
         detail_title.text = title
         detail_content.text = content
 
         binding.update.setOnClickListener {
-            updateItem()
+            val intent = Intent(this, UpdateItemActivity::class.java).apply {
+                putExtra("id", id)
+            }
+            startActivity(intent)
         }
     }
 

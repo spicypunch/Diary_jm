@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.databinding.ActivityMainBinding.bind
@@ -14,8 +15,9 @@ import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
 
-class MainActivity : AppCompatActivity(), OnItemLongClickListener {
+const val title = ""
 
+class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var db: AppDatabase
@@ -32,6 +34,10 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
+
+//        if (savedInstanceState != null) {
+//            textView.text = savedInstanceState.getString("")
+//        }
 
         db = AppDatabase.getInstance(this)!!
         sunflowerDao = db.getSunFlowerDao()
@@ -69,6 +75,11 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
         builder.show()
     }
 
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        outState.putString()
+//        super.onSaveInstanceState(outState)
+//    }
+
     private fun deleteItem(position: Int) {
         Thread {
             sunflowerDao.deleteItem(sunflowerList[position])
@@ -79,8 +90,10 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             }
         }.start()
     }
+
     override fun onRestart() {
         super.onRestart()
         getAllItemList()
+//        adapter.notifyDataSetChanged()
     }
 }

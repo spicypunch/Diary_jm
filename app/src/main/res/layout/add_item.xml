@@ -7,15 +7,16 @@
     tools:context=".AddItemActivity">
 
     <TextView
-        android:id="@+id/add_item_title"
+        android:id="@+id/update_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minHeight="?actionBarSize"
-        android:text="@string/add_item"
+        android:text="@string/update_item"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         tools:ignore="MissingConstraints" />
+    
     <EditText
         android:id="@+id/edit_title"
         android:layout_width="0dp"
@@ -30,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item_title" />
+        app:layout_constraintTop_toBottomOf="@+id/update_item_title" />
 
     <EditText
         android:id="@+id/edit_content"
@@ -39,9 +40,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
-        android:hint="@string/insert_title"
-        android:imeOptions="actionDone"
-        android:inputType="text"
+        android:hint="@string/insert_content"
+        android:imeOptions="actionNone"
+        android:inputType="textMultiLine"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,16 +60,15 @@
         android:layout_marginStart="20dp" />
 
     <Button
-        android:id="@+id/btn_completion"
+        android:id="@+id/btn_update_completion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/completion"
+        android:text="@string/update_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

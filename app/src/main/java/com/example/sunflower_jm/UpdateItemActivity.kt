@@ -14,6 +14,7 @@ class UpdateItemActivity() : AppCompatActivity() {
     lateinit var binding: UpdateItemBinding
     lateinit var db : AppDatabase
     lateinit var sunFlowerDao: SunFlowerDao
+    private lateinit var adapter: RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class UpdateItemActivity() : AppCompatActivity() {
             Thread {
                 sunFlowerDao.updateItem(SunFlowerEntity(id, itemTitle, itemContent))
                 runOnUiThread {
+                    adapter.notifyDataSetChanged()
                     Toast.makeText(this, "수정되었습니다.", Toast.LENGTH_SHORT).show()
                     finish()
                 }

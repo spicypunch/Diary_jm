@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.databinding.ActivityMainBinding
+import com.example.sunflower_jm.databinding.ActivityMainBinding.bind
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
@@ -18,7 +19,8 @@ const val title = ""
 
 class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var db : AppDatabase
+
+    private lateinit var db: AppDatabase
     private lateinit var sunflowerDao: SunFlowerDao
     private lateinit var sunflowerList: ArrayList<SunFlowerEntity>
     private lateinit var adapter: RecyclerViewAdapter
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             //this의 의미?
             adapter = RecyclerViewAdapter(sunflowerList, this)
             binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = GridLayoutManager(this,2)
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         }
     }
 

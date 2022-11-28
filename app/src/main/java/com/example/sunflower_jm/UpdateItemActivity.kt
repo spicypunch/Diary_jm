@@ -1,6 +1,7 @@
 package com.example.sunflower_jm
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
+import kotlinx.android.synthetic.main.add_item.*
 
 class UpdateItemActivity() : AppCompatActivity() {
 
@@ -15,6 +17,8 @@ class UpdateItemActivity() : AppCompatActivity() {
     lateinit var db : AppDatabase
     lateinit var sunFlowerDao: SunFlowerDao
     private lateinit var adapter: RecyclerViewAdapter
+
+    private lateinit var item : SunFlowerEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +32,15 @@ class UpdateItemActivity() : AppCompatActivity() {
         binding.btnUpdateCompletion.setOnClickListener {
             updateItem()
         }
+
+        item = intent.getSerializableExtra("data") as SunFlowerEntity
+        edit_title.text = Editable.Factory.getInstance().newEditable(item.title)
+        edit_content.text = Editable.Factory.getInstance().newEditable(item.content)
+
     }
 
     private fun updateItem() {
-        val id = intent.getSerializableExtra("id") as Int
+        val id =  item.id
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
 

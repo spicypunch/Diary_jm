@@ -6,13 +6,15 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+/*
+데이터 접근 객체
+
+어노테이션을 통해 어떤 구성 요소인지 꼭 알려줘야함
+ */
 @Dao
 interface SunFlowerDao {
     @Query("SELECT * FROM SunFlowerEntity")
     fun getAll(): List<SunFlowerEntity>
-
-//    @Query("SELECT id FROM SunFlowerEntity WHERE title = :gettitle AND :getcontent")
-//    fun getID(gettitle: String, getcontent: String) : Int
 
     @Insert
     fun insertItem(item: SunFlowerEntity)
@@ -22,6 +24,4 @@ interface SunFlowerDao {
 
     @Update
     fun updateItem(item: SunFlowerEntity)
-
-//    @Query("DELETE FROM SunFlowerEntity WHERE id = :mld")
 }

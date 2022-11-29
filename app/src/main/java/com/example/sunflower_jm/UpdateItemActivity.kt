@@ -1,5 +1,7 @@
 package com.example.sunflower_jm
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -9,7 +11,6 @@ import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
-import kotlinx.android.synthetic.main.add_item.*
 
 class UpdateItemActivity() : AppCompatActivity() {
 
@@ -34,8 +35,8 @@ class UpdateItemActivity() : AppCompatActivity() {
         }
 
         item = intent.getSerializableExtra("data") as SunFlowerEntity
-        edit_title.text = Editable.Factory.getInstance().newEditable(item.title)
-        edit_content.text = Editable.Factory.getInstance().newEditable(item.content)
+        binding.editTitle.text = Editable.Factory.getInstance().newEditable(item.title)
+        binding.editContent.text = Editable.Factory.getInstance().newEditable(item.content)
 
     }
 
@@ -59,5 +60,10 @@ class UpdateItemActivity() : AppCompatActivity() {
                 }
             }.start()
         }
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra("title", itemTitle)
+            putExtra("content", itemContent)})
+
+        finish()
     }
 }

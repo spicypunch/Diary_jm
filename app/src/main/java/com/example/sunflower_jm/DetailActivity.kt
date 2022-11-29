@@ -2,21 +2,23 @@ package com.example.sunflower_jm
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.databinding.DetailViewBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
-import kotlinx.android.synthetic.main.detail_view.*
 
-class DetailActivity : AppCompatActivity(){
+class DetailActivity : AppCompatActivity() {
 
     lateinit var binding: DetailViewBinding
     lateinit var sunFlowerDao: SunFlowerDao
-    lateinit var db : AppDatabase
+    lateinit var db: AppDatabase
 
-    private lateinit var item : SunFlowerEntity
+    private lateinit var title: ActivityResultLauncher<String>
+    private lateinit var content: ActivityResultLauncher<String>
+
+    private lateinit var item: SunFlowerEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +38,19 @@ class DetailActivity : AppCompatActivity(){
          */
         item = intent.getSerializableExtra("data") as SunFlowerEntity
 
-        detail_title.text = item.title
-        detail_content.text = item.content
-
+        binding.detailTitle.text = item.title
+        binding.detailContent.text = item.content
 
         binding.update.setOnClickListener {
-            val intent = Intent(this, UpdateItemActivity::class.java).apply {
-                putExtra("data", item)
+//            val intent = Intent(this, UpdateItemActivity::class.java).apply {
+//                putExtra("data", item)
+//            }
+//            startActivity(intent)
+            title = registerForActivityResult(UpdateActivityContract) { result: String? ->
+                result?.let {
+
+                }
             }
-            startActivity(intent)
         }
     }
 }

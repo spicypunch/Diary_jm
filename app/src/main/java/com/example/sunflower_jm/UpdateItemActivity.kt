@@ -1,6 +1,9 @@
 package com.example.sunflower_jm
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +19,8 @@ class UpdateItemActivity() : AppCompatActivity() {
     lateinit var sunFlowerDao: SunFlowerDao
     private lateinit var adapter: RecyclerViewAdapter
 
+    private lateinit var item : SunFlowerEntity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,10 +33,15 @@ class UpdateItemActivity() : AppCompatActivity() {
         binding.btnUpdateCompletion.setOnClickListener {
             updateItem()
         }
+
+        item = intent.getSerializableExtra("data") as SunFlowerEntity
+        binding.editTitle.text = Editable.Factory.getInstance().newEditable(item.title)
+        binding.editContent.text = Editable.Factory.getInstance().newEditable(item.content)
+
     }
 
     private fun updateItem() {
-        val id = intent.getSerializableExtra("id") as Int
+        val id =  item.id
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
 
@@ -50,5 +60,10 @@ class UpdateItemActivity() : AppCompatActivity() {
                 }
             }.start()
         }
+        setResult(Activity.RESULT_OK, Intent().apply {
+            putExtra("title", itemTitle)
+            putExtra("content", itemContent)})
+
+        finish()
     }
 }

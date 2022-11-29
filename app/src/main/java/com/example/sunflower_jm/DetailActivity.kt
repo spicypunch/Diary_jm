@@ -1,6 +1,5 @@
 package com.example.sunflower_jm
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +45,7 @@ class DetailActivity : AppCompatActivity() {
 //                putExtra("data", item)
 //            }
 //            startActivity(intent)
+
             title = registerForActivityResult(UpdateActivityContract) { result: String? ->
                 result?.let {
 

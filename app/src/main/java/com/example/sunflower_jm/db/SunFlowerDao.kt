@@ -25,6 +25,6 @@ interface SunFlowerDao {
     @Update
     fun updateItem(item: SunFlowerEntity)
 
-    @Query("SELECT * FROM SunFlowerEntity WHERE id = :id")
-    fun selectItem(id: Int)
+//    @Query("SELECT * FROM SunFlowerEntity WHERE id = :id")
+//    fun selectItem(id: Int)
 }

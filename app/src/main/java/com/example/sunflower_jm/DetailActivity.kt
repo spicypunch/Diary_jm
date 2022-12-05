@@ -12,6 +12,10 @@ import com.example.sunflower_jm.db.SunFlowerEntity
 
 class DetailActivity : AppCompatActivity() {
 
+    companion object {
+        const val KEY_ID = "id"
+    }
+
     lateinit var binding: DetailViewBinding
     lateinit var sunFlowerDao: SunFlowerDao
     lateinit var db: AppDatabase
@@ -20,7 +24,7 @@ class DetailActivity : AppCompatActivity() {
     잘 동작하는지 확인하기 위해 새로 update한 값 중 title값만 가져오고
     값이 잘 넘어왔는지 Toast로 확인해보기 위해 작성한 코드
      */
-    private var get_Test: ActivityResultLauncher<SunFlowerEntity> =
+    private val getTest: ActivityResultLauncher<SunFlowerEntity> =
         registerForActivityResult(DetailActivityContract()) { result: String? ->
             result?.let {
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
@@ -68,7 +72,7 @@ class DetailActivity : AppCompatActivity() {
 //            startActivity(intent)
 
             //launch로 액티비티 실행
-            get_Test.launch(item)
+            getTest.launch(item)
         }
     }
 }

@@ -6,16 +6,16 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.example.sunflower_jm.db.SunFlowerEntity
 
-class DetailActivityContract : ActivityResultContract<SunFlowerEntity, String>() {
+class DetailActivityContract : ActivityResultContract<SunFlowerEntity, String?>() {
 
     /*
      다른 액티비티를 호출하기 위한 인텐트를 생성, 제네릭 타입 I가 인텐트를 생성하기 위한 매개변수 타입으로 전달
      startActivityForResult 메서드 호출을 대체
      */
     override fun createIntent(context: Context, input: SunFlowerEntity): Intent {
-        val intent = Intent(context, UpdateItemActivity::class.java)
-        intent.putExtra("input", input)
-        return intent
+        return Intent(context, UpdateItemActivity::class.java).apply {
+            putExtra("input", input)
+        }
     }
 
     /*
@@ -30,14 +30,9 @@ class DetailActivityContract : ActivityResultContract<SunFlowerEntity, String>()
     ?를 지우고 null을 반환 안 하고 테스트 해보려해도 잘 안 되네요
      */
     override fun parseResult(resultCode: Int, intent: Intent?): String? {
-//        return when (resultCode) {
-//            Activity.RESULT_OK -> intent?.getStringExtra("result")
-//            else -> null
-//        }
-        return if (resultCode == Activity.RESULT_OK) {
-            intent?.getStringExtra("result")
-        } else {
-            null
+        return when (resultCode) {
+            Activity.RESULT_OK -> intent?.getStringExtra("result")
+            else -> "cool"
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.sunflower_jm
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -12,7 +13,7 @@ import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
 
-class UpdateItemActivity() : AppCompatActivity() {
+class UpdateItemActivity : AppCompatActivity() {
 
     lateinit var binding: UpdateItemBinding
     lateinit var db : AppDatabase
@@ -33,7 +34,7 @@ class UpdateItemActivity() : AppCompatActivity() {
             updateItem()
         }
 
-        item = intent.getSerializableExtra("data") as SunFlowerEntity
+        item = intent.getSerializableExtra(KEY_DATA) as SunFlowerEntity
         binding.editTitle.text = Editable.Factory.getInstance().newEditable(item.title)
         binding.editContent.text = Editable.Factory.getInstance().newEditable(item.content)
 
@@ -61,5 +62,15 @@ class UpdateItemActivity() : AppCompatActivity() {
         //수정된 제목 값 다시 넘기기
         setResult(Activity.RESULT_OK, Intent().apply { putExtra("result", itemTitle) })
 
+    }
+
+    companion object {
+
+        private const val KEY_DATA = "key-data"
+
+        fun getIntent(context: Context, data: SunFlowerEntity): Intent =
+            Intent(context, UpdateItemActivity::class.java).apply {
+                putExtra(KEY_DATA, data)
+            }
     }
 }

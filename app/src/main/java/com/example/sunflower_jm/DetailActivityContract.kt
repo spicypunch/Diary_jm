@@ -13,9 +13,10 @@ class DetailActivityContract : ActivityResultContract<SunFlowerEntity, String?>(
      startActivityForResult 메서드 호출을 대체
      */
     override fun createIntent(context: Context, input: SunFlowerEntity): Intent {
-        return Intent(context, UpdateItemActivity::class.java).apply {
-            putExtra("input", input)
-        }
+        return UpdateItemActivity.getIntent(context, input)
+//        return Intent(context, UpdateItemActivity::class.java).apply {
+//            putExtra("input", input)
+//        }
     }
 
     /*

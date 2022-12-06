@@ -1,16 +1,17 @@
-package com.example.sunflower_jm
+package com.example.sunflower_jm.main
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.sunflower_jm.AddItemActivity
+import com.example.sunflower_jm.OnItemLongClickListener
+import com.example.sunflower_jm.RecyclerViewAdapter
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.SunFlowerDao
 import com.example.sunflower_jm.db.SunFlowerEntity
 
 /*
@@ -21,7 +22,7 @@ AppCompatActivity
 OnItemLongClickListener
 한 항목을 오래 누르는 거을 감지하여 자동으로 콜백 메소드를 호출하는 리스너
  */
-class MainActivity : AppCompatActivity(), OnItemLongClickListener {
+class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.View {
 
     /*
     lateinit
@@ -32,10 +33,17 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     기초 타입 프로퍼티에는 사용할 수 없음
     */
     private lateinit var binding: ActivityMainBinding
-    private lateinit var db: AppDatabase
-    private lateinit var sunflowerDao: SunFlowerDao
-    private lateinit var sunflowerList: ArrayList<SunFlowerEntity>
+//    private lateinit var db: AppDatabase
+//    private lateinit var sunflowerDao: SunFlowerDao
+//    private lateinit var sunflowerList: MutableList<SunFlowerEntity>
     private lateinit var adapter: RecyclerViewAdapter
+
+    private val presenter by lazy {
+        MainPresenter(
+            AppDatabase.getInstance(this)!!.getSunFlowerDao(),
+            this,
+        )
+    }
 
     /*
     onCreate
@@ -59,6 +67,10 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
          */
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        adapter = RecyclerViewAdapter(this)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         /*
         intent
@@ -86,10 +98,11 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             startActivity(intent)
         }
 
-        db = AppDatabase.getInstance(this)!!
-        sunflowerDao = db.getSunFlowerDao()
+//        db = AppDatabase.getInstance(this)!!
+//        sunflowerDao = db.getSunFlowerDao()
+        presenter.obtainLoadItems()
 
-        getAllItemList()
+//        getAllItemList()
     }
     /*
     Thread
@@ -106,12 +119,27 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     따라서 runOnUiThread을 통해 UI 작업을 함
     */
     private fun getAllItemList() {
-        Thread {
-            sunflowerList = ArrayList(sunflowerDao.getAll())
-            Log.e("check", sunflowerList.toString())
-            setRecyclerView()
-        }.start()
+//        val newList = (0..2).map {
+//            val index = (1..100).random()
+//            SunFlowerEntity(id = index, "title $index", "content $index")
+//        }
+//        val startNumber = adapter.itemCount
+//        adapter.updateList(newList)
+//        adapter.notifyItemRangeInserted(startNumber, newList.size)
+//        Thread {
+//            sunflowerList = ArrayList(sunflowerDao.getAll())
+//            Log.e("check", sunflowerList.toString())
+//            setRecyclerView()
+//        }.start()
     }
+
+    override fun updateItems(items: List<SunFlowerEntity>) {
+        runOnUiThread {
+            adapter.updateList(items)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
     /*
     adapter
     간단히 말해 데이터와 리스트 뷰 사이의 통신을 위한 다리 역할을 함
@@ -123,9 +151,8 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     */
     private fun setRecyclerView() {
         runOnUiThread {
-            adapter = RecyclerViewAdapter(sunflowerList, this)
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+//            adapter.updateList(sunflowerList)
+//            adapter.notifyDataSetChanged()
         }
     }
     /*
@@ -138,23 +165,22 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     DialogInterface
     사용자가 버튼을 눌렀을 때 실행할 작업을 정의
     */
-    override fun onLongClick(position: Int) {
+    override fun onLongClick(item: SunFlowerEntity) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("할 일 삭제")
         builder.setMessage("정말 삭제하시겠습니까?")
         builder.setNegativeButton("취소", null)
         builder.setPositiveButton("네", object : DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
-                deleteItem(position)
+                deleteItem(item)
             }
         })
         builder.show()
     }
 
-    private fun deleteItem(position: Int) {
+    private fun deleteItem(item: SunFlowerEntity) {
         Thread {
-            sunflowerDao.deleteItem(sunflowerList[position])
-            sunflowerList.removeAt(position)
+            presenter.delete(item)
             runOnUiThread {
                 adapter.notifyDataSetChanged()
                 Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
@@ -164,6 +190,6 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
 
     override fun onRestart() {
         super.onRestart()
-        getAllItemList()
+        presenter.obtainLoadItems()
     }
 }

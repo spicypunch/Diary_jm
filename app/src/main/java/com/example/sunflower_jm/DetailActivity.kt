@@ -1,6 +1,8 @@
 package com.example.sunflower_jm
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.databinding.DetailViewBinding
@@ -14,8 +16,16 @@ class DetailActivity : AppCompatActivity() {
     lateinit var sunFlowerDao: SunFlowerDao
     lateinit var db: AppDatabase
 
-    private lateinit var title: ActivityResultLauncher<String>
-    private lateinit var content: ActivityResultLauncher<String>
+    /*
+    잘 동작하는지 확인하기 위해 새로 update한 값 중 title값만 가져오고
+    값이 잘 넘어왔는지 Toast로 확인해보기 위해 작성한 코드
+     */
+    private var get_Test: ActivityResultLauncher<SunFlowerEntity> =
+        registerForActivityResult(DetailActivityContract()) { result: String? ->
+            result?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        }
 
     private lateinit var item: SunFlowerEntity
 
@@ -37,8 +47,19 @@ class DetailActivity : AppCompatActivity() {
          */
         item = intent.getSerializableExtra("data") as SunFlowerEntity
 
-        binding.detailTitle.text = item.title
-        binding.detailContent.text = item.content
+        /*
+        get_Test의 변수가 null이 아닐 경우 get_Test의 값을 적용
+        하지만 if (get_Test != null)가 딱 봐도 잘 안 돌아 갈 것 같습니다..
+        값이 잘 넘어오는지 확인 되면 조건문 수정하겠습니다.
+        현재는 주석처리
+
+        if (get_Test != null) {
+            binding.detailTitle.text = get_Test.toString()
+        } else {
+         */
+            binding.detailTitle.text = item.title
+            binding.detailContent.text = item.content
+//        }
 
         binding.update.setOnClickListener {
 //            val intent = Intent(this, UpdateItemActivity::class.java).apply {
@@ -46,11 +67,8 @@ class DetailActivity : AppCompatActivity() {
 //            }
 //            startActivity(intent)
 
-            title = registerForActivityResult(UpdateActivityContract) { result: String? ->
-                result?.let {
-
-                }
-            }
+            //launch로 액티비티 실행
+            get_Test.launch(item)
         }
     }
 }

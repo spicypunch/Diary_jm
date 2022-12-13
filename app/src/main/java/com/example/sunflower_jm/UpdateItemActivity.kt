@@ -17,7 +17,6 @@ class UpdateItemActivity() : AppCompatActivity() {
     lateinit var binding: UpdateItemBinding
     lateinit var db : AppDatabase
     lateinit var sunFlowerDao: SunFlowerDao
-    private lateinit var adapter: RecyclerViewAdapter
 
     private lateinit var item : SunFlowerEntity
 
@@ -54,16 +53,13 @@ class UpdateItemActivity() : AppCompatActivity() {
             Thread {
                 sunFlowerDao.updateItem(SunFlowerEntity(id, itemTitle, itemContent))
                 runOnUiThread {
-                    adapter.notifyDataSetChanged()
                     Toast.makeText(this, "수정되었습니다.", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }.start()
         }
-        setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra("title", itemTitle)
-            putExtra("content", itemContent)})
+        //수정된 제목 값 다시 넘기기
+        setResult(Activity.RESULT_OK, Intent().apply { putExtra("result", itemTitle) })
 
-        finish()
     }
 }

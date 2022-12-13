@@ -12,8 +12,15 @@ import com.example.sunflower_jm.db.SunFlowerEntity
 RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>()
 리사이클러 뷰를 사용하기 위한 상속
  */
-class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>, private val listener : OnItemLongClickListener) :
+class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+
+    private val itemList = mutableListOf<SunFlowerEntity>()
+
+    fun updateList(items: List<SunFlowerEntity>) {
+        itemList.clear()
+        itemList.addAll(items)
+    }
     /*
     ViewHolder
     맨 처음 화면에 보여질 10개 정도의 뷰 객체만을 만들고,
@@ -75,7 +82,7 @@ class RecyclerViewAdapter(private val itemList: ArrayList<SunFlowerEntity>, priv
         holder.bind(sunflowerData)
 
         holder.root.setOnLongClickListener {
-            listener.onLongClick(position)
+            listener.onLongClick(sunflowerData)
             false
         }
     }

@@ -12,7 +12,7 @@ import com.example.sunflower_jm.OnItemLongClickListener
 import com.example.sunflower_jm.RecyclerViewAdapter
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.SunFlowerEntity
+import com.example.sunflower_jm.db.DiaryEntity
 
 /*
 AppCompatActivity
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
 
     private val presenter by lazy {
         MainPresenter(
-            AppDatabase.getInstance(this)!!.getSunFlowerDao(),
+            AppDatabase.getInstance(this)!!.getDiaryDao(),
             this,
         )
     }
@@ -97,12 +97,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
-
-//        db = AppDatabase.getInstance(this)!!
-//        sunflowerDao = db.getSunFlowerDao()
         presenter.obtainLoadItems()
-
-//        getAllItemList()
     }
     /*
     Thread
@@ -118,22 +113,8 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
     UI처리 순서를 알 수 없기 때문에
     따라서 runOnUiThread을 통해 UI 작업을 함
     */
-    private fun getAllItemList() {
-//        val newList = (0..2).map {
-//            val index = (1..100).random()
-//            SunFlowerEntity(id = index, "title $index", "content $index")
-//        }
-//        val startNumber = adapter.itemCount
-//        adapter.updateList(newList)
-//        adapter.notifyItemRangeInserted(startNumber, newList.size)
-//        Thread {
-//            sunflowerList = ArrayList(sunflowerDao.getAll())
-//            Log.e("check", sunflowerList.toString())
-//            setRecyclerView()
-//        }.start()
-    }
 
-    override fun updateItems(items: List<SunFlowerEntity>) {
+    override fun updateItems(items: List<DiaryEntity>) {
         runOnUiThread {
             adapter.updateList(items)
             adapter.notifyDataSetChanged()
@@ -165,7 +146,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
     DialogInterface
     사용자가 버튼을 눌렀을 때 실행할 작업을 정의
     */
-    override fun onLongClick(item: SunFlowerEntity) {
+    override fun onLongClick(item: DiaryEntity) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("할 일 삭제")
         builder.setMessage("정말 삭제하시겠습니까?")
@@ -178,7 +159,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
         builder.show()
     }
 
-    private fun deleteItem(item: SunFlowerEntity) {
+    private fun deleteItem(item: DiaryEntity) {
         Thread {
             presenter.delete(item)
             runOnUiThread {

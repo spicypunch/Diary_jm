@@ -14,7 +14,7 @@
         android:theme="@style/Theme.SunFlower_jm"
         tools:targetApi="31">
         <activity
-            android:name=".UpdateItemActivity"
+            android:name=".update.UpdateItemActivity"
             android:exported="false"/>
         <activity
             android:name=".DetailActivity"

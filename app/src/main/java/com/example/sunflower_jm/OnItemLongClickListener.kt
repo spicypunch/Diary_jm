@@ -1,7 +1,7 @@
 package com.example.sunflower_jm
 
-import com.example.sunflower_jm.db.SunFlowerEntity
+import com.example.sunflower_jm.db.DiaryEntity
 
 interface OnItemLongClickListener {
-    fun onLongClick(item: SunFlowerEntity)
+    fun onLongClick(item: DiaryEntity)
 }

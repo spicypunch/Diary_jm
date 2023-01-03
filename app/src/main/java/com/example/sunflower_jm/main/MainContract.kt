@@ -1,20 +1,19 @@
 package com.example.sunflower_jm.main
 
 import androidx.annotation.WorkerThread
-import com.example.sunflower_jm.db.SunFlowerEntity
+import com.example.sunflower_jm.db.DiaryEntity
 
 interface MainContract {
 
     interface View {
-
         @WorkerThread
-        fun updateItems(items: List<SunFlowerEntity>)
+        fun updateItems(items: List<DiaryEntity>)
     }
 
     interface Presenter {
 
         fun obtainLoadItems()
 
-        fun delete(item: SunFlowerEntity)
+        fun delete(item: DiaryEntity)
     }
 }

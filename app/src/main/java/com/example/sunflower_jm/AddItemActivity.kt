@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.SunFlowerDao
+import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.databinding.AddItemBinding
-import com.example.sunflower_jm.db.SunFlowerEntity
+import com.example.sunflower_jm.db.DiaryEntity
 
 /*
 AppCompatActivity
@@ -25,7 +25,7 @@ class AddItemActivity : AppCompatActivity() {
     */
     lateinit var binding: AddItemBinding
     lateinit var db : AppDatabase
-    lateinit var sunFlowerDao: SunFlowerDao
+    lateinit var diaryDao: DiaryDao
     private lateinit var adapter: RecyclerViewAdapter
 
     /*
@@ -55,7 +55,7 @@ class AddItemActivity : AppCompatActivity() {
         AppDatabase.kt을 통해 DB 정보를 가져옴
          */
         db = AppDatabase.getInstance(this)!!
-        sunFlowerDao = db.getSunFlowerDao()
+        diaryDao = db.getDiaryDao()
 
         /*
         btn_completion을 클릭 시 insertItem()을 실행
@@ -103,7 +103,7 @@ class AddItemActivity : AppCompatActivity() {
             Toast.makeText(this, "모든 항목을 채워주세요!!", Toast.LENGTH_SHORT).show()
         } else {
           Thread {
-              sunFlowerDao.insertItem(SunFlowerEntity(null, itemTitle, itemContent))
+              diaryDao.insertItem(DiaryEntity(null, itemTitle, itemContent))
               runOnUiThread {
                   Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
                   finish()

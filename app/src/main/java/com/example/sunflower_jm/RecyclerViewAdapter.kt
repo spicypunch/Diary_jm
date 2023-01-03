@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sunflower_jm.databinding.ItemBinding
-import com.example.sunflower_jm.db.SunFlowerEntity
+import com.example.sunflower_jm.db.DiaryEntity
 
 /*
 RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>()
@@ -15,9 +15,9 @@ RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>()
 class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    private val itemList = mutableListOf<SunFlowerEntity>()
+    private val itemList = mutableListOf<DiaryEntity>()
 
-    fun updateList(items: List<SunFlowerEntity>) {
+    fun updateList(items: List<DiaryEntity>) {
         itemList.clear()
         itemList.addAll(items)
     }
@@ -32,7 +32,7 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
         val item_content = binding.itemContent
         val root = binding.root
 
-        fun bind(item: SunFlowerEntity) {
+        fun bind(item: DiaryEntity) {
             item_title.text = item.title
             item_content.text = item.content
             Log.e("title, content", item.title)
@@ -76,13 +76,13 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
     아래에서 새롭게 보여질 데이터의 인덱스 값이 position 이라는 이름으로 사용가능
      */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val sunflowerData = itemList[position]
-        holder.item_title.text = sunflowerData.title
-        holder.item_content.text = sunflowerData.content
-        holder.bind(sunflowerData)
+        val diaryData = itemList[position]
+        holder.item_title.text = diaryData.title
+        holder.item_content.text = diaryData.content
+        holder.bind(diaryData)
 
         holder.root.setOnLongClickListener {
-            listener.onLongClick(sunflowerData)
+            listener.onLongClick(diaryData)
             false
         }
     }

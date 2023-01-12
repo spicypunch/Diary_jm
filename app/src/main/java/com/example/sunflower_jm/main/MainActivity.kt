@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.AddItemActivity
 import com.example.sunflower_jm.OnItemLongClickListener
@@ -14,16 +16,13 @@ import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryEntity
 
-class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.View {
+class MainActivity : AppCompatActivity(), OnItemLongClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
-
-    private val presenter by lazy {
-        MainPresenter(
-            AppDatabase.getInstance(this)!!.getDiaryDao(),
-            this,
-        )
+    private val viewModel by lazy {
+        MainViewModel(AppDatabase.getInstance(this)!!.getDiaryDao())
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +34,15 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-       binding.fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
-        presenter.obtainLoadItems()
-    }
+        viewModel.obtainLoadItems()
 
-    override fun updateItems(items: MutableList<DiaryEntity>) {
-        runOnUiThread {
-            adapter.updateList(items)
-//            adapter.notifyDataSetChanged()
-        }
+        viewModel.items.observe(this, Observer {
+            adapter.updateList(viewModel.items.value as MutableList<DiaryEntity>)
+        })
     }
 
     override fun onLongClick(item: DiaryEntity) {
@@ -64,9 +60,8 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
 
     private fun deleteItem(item: DiaryEntity) {
         Thread {
-            presenter.delete(item)
+            viewModel.delete(item)
             runOnUiThread {
-//                adapter.notifyDataSetChanged()
                 Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }.start()
@@ -74,6 +69,6 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener, MainContract.
 
     override fun onRestart() {
         super.onRestart()
-        presenter.obtainLoadItems()
+        viewModel.obtainLoadItems()
     }
 }

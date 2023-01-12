@@ -11,7 +11,7 @@ class MainPresenter(
     override fun obtainLoadItems() {
         Thread {
             val items = diaryDao.getAll()
-            view.updateItems(items)
+            view.updateItems(items as MutableList<DiaryEntity>)
         }.start()
     }
 

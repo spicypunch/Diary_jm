@@ -26,7 +26,6 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var binding: AddItemBinding
     lateinit var db : AppDatabase
     lateinit var diaryDao: DiaryDao
-    private lateinit var adapter: RecyclerViewAdapter
 
     /*
     onCreate
@@ -74,18 +73,6 @@ class AddItemActivity : AppCompatActivity() {
         val itemContent = binding.editContent.text.toString()
 
         /*
-        만약 가져온 변수의 값이 비어있을 때 메시지를 출력함
-
-        Toast
-        사용자에게 짧은 메시지 형식으로 정보를 전달하는 팝업
-        시간이 지나면 자동으로 사라지는 메시지
-
-        Toast.LENGTH_SHORT
-        짧게 Toast 메시지를 표시함
-
-        show()
-        사용자에게 보여줌
-
         Thread
         앱이 처음 시작될 때 시스템이 스레드 하나를 생성하는데 이를 메인 스레드라고 함
         메인 스레드의 역할은

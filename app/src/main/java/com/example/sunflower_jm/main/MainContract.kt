@@ -7,7 +7,7 @@ interface MainContract {
 
     interface View {
         @WorkerThread
-        fun updateItems(items: List<DiaryEntity>)
+        fun updateItems(items: MutableList<DiaryEntity>)
     }
 
     interface Presenter {

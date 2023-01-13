@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sunflower_jm.AddItemActivity
 import com.example.sunflower_jm.OnItemLongClickListener
+import com.example.sunflower_jm.R
 import com.example.sunflower_jm.RecyclerViewAdapter
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
@@ -21,14 +23,13 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
     private val viewModel by lazy {
-        ViewModelProvider(this, MainViewModel.Factory(AppDatabase.getInstance(this)!!
-            .getDiaryDao())).get(MainViewModel::class.java)
+        ViewModelProvider(this, MainViewModel.Factory(AppDatabase.getInstance(this)!!.getDiaryDao())).
+        get(MainViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         adapter = RecyclerViewAdapter(this)
         binding.recyclerView.adapter = adapter

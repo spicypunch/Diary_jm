@@ -25,15 +25,11 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class MyViewHolder(binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val item_title = binding.itemTitle
-        val item_content = binding.itemContent
+    class MyViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
 
         fun bind(item: DiaryEntity) {
-            item_title.text = item.title
-            item_content.text = item.content
-            Log.e("title, content", item.title)
+            binding.data = item
 
             itemView.setOnClickListener {
                 Intent(root.context, DetailActivity::class.java).apply {
@@ -51,13 +47,10 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val diaryData = itemList[position]
-        holder.item_title.text = diaryData.title
-        holder.item_content.text = diaryData.content
-        holder.bind(diaryData)
+        holder.bind(itemList[position])
 
         holder.root.setOnLongClickListener {
-            listener.onLongClick(diaryData)
+            listener.onLongClick(itemList[position])
             false
         }
     }

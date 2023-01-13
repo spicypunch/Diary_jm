@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
     private val viewModel by lazy {
-        MainViewModel(AppDatabase.getInstance(this)!!.getDiaryDao())
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this, MainViewModel.Factory(AppDatabase.getInstance(this)!!
+            .getDiaryDao())).get(MainViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

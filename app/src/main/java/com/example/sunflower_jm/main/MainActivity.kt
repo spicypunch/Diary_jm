@@ -1,9 +1,11 @@
 package com.example.sunflower_jm.main
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -22,9 +24,12 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerViewAdapter
+
     private val viewModel by lazy {
-        ViewModelProvider(this, MainViewModel.Factory(AppDatabase.getInstance(this)!!.getDiaryDao())).
-        get(MainViewModel::class.java)
+        ViewModelProvider(
+            this,
+            MainViewModel.Factory(AppDatabase.getInstance(this)!!.getDiaryDao())
+        ).get(MainViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +44,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
+
         viewModel.obtainLoadItems()
 
         viewModel.items.observe(this, Observer {

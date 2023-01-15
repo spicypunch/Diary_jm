@@ -1,5 +1,8 @@
 package com.example.sunflower_jm.db
 
+import android.graphics.Bitmap
+import android.media.Image
+import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,8 +16,9 @@ data class
 게시글 정보만 가지고 있기만 하면 되므로 데이터 클래스로 만들기 적합
  */
 @Entity
-data class DiaryEntity (
-    @PrimaryKey(autoGenerate = true) var id : Int? = null,
+data class DiaryEntity(
+    @PrimaryKey(autoGenerate = true) var id: Int? = null,
+    @ColumnInfo(name = "image") var image: ImageView? = null,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "content") var content: String
 ) : java.io.Serializable

@@ -23,10 +23,10 @@ import okio.IOException
 class AddItemActivity : AppCompatActivity() {
 
     lateinit var binding: AddItemBinding
-    lateinit var db : AppDatabase
+    lateinit var db: AppDatabase
     lateinit var diaryDao: DiaryDao
     var REQUEST_IMAGE_CODE = 1001
-    var uri : Uri? = null
+    var uri: Uri? = null
     lateinit var itemImage: ImageView
 
 //    private val permissionList = arrayOf(
@@ -77,7 +77,7 @@ class AddItemActivity : AppCompatActivity() {
             try {
                 val bitMap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                 itemImage.setImageBitmap(bitMap)
-            } catch (e: IOException)  {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
 
@@ -85,10 +85,19 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     fun requestPermissions(): Boolean {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return true
         }
 
@@ -97,7 +106,7 @@ class AddItemActivity : AppCompatActivity() {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
 
-        )
+            )
 
         ActivityCompat.requestPermissions(this, permissions, 0)
         return false
@@ -110,9 +119,9 @@ class AddItemActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        when(requestCode){
+        when (requestCode) {
             0 -> {
-                if (grantResults.isNotEmpty()){
+                if (grantResults.isNotEmpty()) {
                     var isAllGranted = true
                     // 요청한 권한 허용/거부 상태 한번에 체크
                     for (grant in grantResults) {
@@ -121,20 +130,25 @@ class AddItemActivity : AppCompatActivity() {
                             break;
                         }
                     }
-
                     // 요청한 권한을 모두 허용했음.
                     if (isAllGranted) {
                         // 다음 step으로 ~
                     }
                     // 허용하지 않은 권한이 있음. 필수권한/선택권한 여부에 따라서 별도 처리를 해주어야 함.
                     else {
-                        if(!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE)
-                            || !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                                Manifest.permission.CAMERA)
-                            || !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        ){
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            )
+                            || !ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.CAMERA
+                            )
+                            || !ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
                             // 다시 묻지 않기 체크하면서 권한 거부 되었음.
                         } else {
                             // 접근 권한 거부하였음.
@@ -146,18 +160,19 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun insertItem() {
+        val itemImage = binding.imgLoad.image
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
-        if(itemTitle.isBlank() || itemContent.isBlank()) {
+        if (itemTitle.isBlank() || itemContent.isBlank()) {
             Toast.makeText(this, "모든 항목을 채워주세요!!", Toast.LENGTH_SHORT).show()
         } else {
-          Thread {
-              diaryDao.insertItem(DiaryEntity(null, itemImage, itemTitle, itemContent))
-              runOnUiThread {
-                  Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
-                  finish()
-              }
-          }.start()
+            Thread {
+                diaryDao.insertItem(DiaryEntity(null, itemImage, itemTitle, itemContent))
+                runOnUiThread {
+                    Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }.start()
         }
     }
 }

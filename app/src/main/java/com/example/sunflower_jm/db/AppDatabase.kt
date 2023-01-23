@@ -1,9 +1,7 @@
 package com.example.sunflower_jm.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 /*
 Room 데이터베이스 클래스는 3가지 조건이 만족되어야 함
@@ -12,6 +10,8 @@ Room 데이터베이스 클래스는 3가지 조건이 만족되어야 함
 3. DAO를 반환하고 인수가 존재하지 않는 추상 함수가 있음
  */
 @Database(entities = arrayOf(DiaryEntity::class), version = 1) //조건 1에 해당
+
+@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() { //조건 2에 해당
     abstract fun getDiaryDao() : DiaryDao //조건 3에 해당
     /*
@@ -30,4 +30,5 @@ abstract class AppDatabase : RoomDatabase() { //조건 2에 해당
             return appDatabase
         }
     }
+
 }

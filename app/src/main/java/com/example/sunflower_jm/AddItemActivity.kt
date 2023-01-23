@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +18,7 @@ import coil.load
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.databinding.AddItemBinding
+import com.example.sunflower_jm.db.Converter
 import com.example.sunflower_jm.db.DiaryEntity
 import okio.IOException
 
@@ -25,9 +27,10 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var binding: AddItemBinding
     lateinit var db: AppDatabase
     lateinit var diaryDao: DiaryDao
-    var REQUEST_IMAGE_CODE = 1001
-    var uri: Uri? = null
+    private var REQUEST_IMAGE_CODE = 1001
+    private var uri: Uri? = null
     lateinit var itemImage: ImageView
+    lateinit var bitMap: Bitmap
 
 //    private val permissionList = arrayOf(
 //        Manifest.permission.CAMERA,
@@ -66,7 +69,7 @@ class AddItemActivity : AppCompatActivity() {
         binding.btnCompletion.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, REQUEST_IMAGE_CODE)
-            insertItem()
+            insertItem(uri)
         }
     }
 
@@ -75,7 +78,7 @@ class AddItemActivity : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CODE) {
             uri = data?.data
             try {
-                val bitMap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
                 itemImage.setImageBitmap(bitMap)
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -84,7 +87,7 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    fun requestPermissions(): Boolean {
+    private fun requestPermissions(): Boolean {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CAMERA
@@ -159,8 +162,8 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertItem() {
-        val itemImage = binding.imgLoad.image
+    private fun insertItem(uri: Uri?) {
+        val itemImage = Converter().toByteArray(bitMap)
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
         if (itemTitle.isBlank() || itemContent.isBlank()) {

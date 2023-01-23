@@ -13,7 +13,7 @@ class UpdatePresenter(
 
     override fun updateContent() {
         Thread {
-            diaryDao.updateItem(DiaryEntity(id, itemTitle, itemContent))
+//            diaryDao.updateItem(DiaryEntity(id, itemTitle, itemContent))
         }.start()
         view.finishActivity("수정되었습니다.")
     }

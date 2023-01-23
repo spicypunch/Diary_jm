@@ -1,12 +1,11 @@
-package com.example.sunflower_jm.detail
+package com.example.sunflower_jm
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import com.example.sunflower_jm.db.DiaryEntity
-import com.example.sunflower_jm.update.UpdateItemActivity
-import com.example.sunflower_jm.update.UpdatePresenter
+import com.example.sunflower_jm.activity.UpdateItemActivity
 
 class DetailActivityContract : ActivityResultContract<DiaryEntity, HashMap<String, String>?>() {
 

@@ -1,17 +1,18 @@
-package com.example.sunflower_jm.update
+package com.example.sunflower_jm.activity
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.pattern.UpdateContract
+import com.example.sunflower_jm.pattern.UpdatePresenter
 
 class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
 

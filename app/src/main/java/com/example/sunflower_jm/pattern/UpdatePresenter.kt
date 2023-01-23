@@ -1,7 +1,6 @@
-package com.example.sunflower_jm.update
+package com.example.sunflower_jm.pattern
 
 import com.example.sunflower_jm.db.DiaryDao
-import com.example.sunflower_jm.db.DiaryEntity
 
 class UpdatePresenter(
     private val id: Int,

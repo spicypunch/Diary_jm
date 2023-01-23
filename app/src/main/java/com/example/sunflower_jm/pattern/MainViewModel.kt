@@ -1,10 +1,9 @@
-package com.example.sunflower_jm.main
+package com.example.sunflower_jm.pattern
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sunflower_jm.db.DiaryEntity
 import com.example.sunflower_jm.db.DiaryDao
 

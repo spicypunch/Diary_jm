@@ -1,14 +1,13 @@
-package com.example.sunflower_jm.detail
+package com.example.sunflower_jm.activity
 
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.databinding.DetailViewBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.DetailActivityContract
 
 class DetailActivity : AppCompatActivity() {
 

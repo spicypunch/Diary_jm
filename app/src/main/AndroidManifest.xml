@@ -19,16 +19,16 @@
         android:theme="@style/Theme.SunFlower_jm"
         tools:targetApi="31">
         <activity
-            android:name=".update.UpdateItemActivity"
+            android:name=".activity.UpdateItemActivity"
             android:exported="false"/>
         <activity
-            android:name=".detail.DetailActivity"
+            android:name=".activity.DetailActivity"
             android:exported="false"/>
         <activity
-            android:name=".AddItemActivity"
+            android:name=".activity.AddItemActivity"
             android:exported="false"/>
         <activity
-            android:name=".main.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

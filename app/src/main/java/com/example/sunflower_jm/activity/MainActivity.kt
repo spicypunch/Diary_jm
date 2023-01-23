@@ -1,24 +1,22 @@
-package com.example.sunflower_jm.main
+package com.example.sunflower_jm.activity
 
-import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.sunflower_jm.AddItemActivity
 import com.example.sunflower_jm.OnItemLongClickListener
 import com.example.sunflower_jm.R
-import com.example.sunflower_jm.RecyclerViewAdapter
+import com.example.sunflower_jm.adapter.RecyclerViewAdapter
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.pattern.MainViewModel
 
 class MainActivity : AppCompatActivity(), OnItemLongClickListener {
 

@@ -52,7 +52,7 @@ class AddItemActivity : AppCompatActivity() {
     // 파일 불러오기
     private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         binding.imgLoad.load(uri)
-        uriInfo = uri
+//        uriInfo = uri
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +68,8 @@ class AddItemActivity : AppCompatActivity() {
 
         }
         binding.btnCompletion.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//            startActivityForResult(intent, REQUEST_IMAGE_CODE)
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, REQUEST_IMAGE_CODE)
             insertItem()
         }
     }
@@ -77,18 +77,19 @@ class AddItemActivity : AppCompatActivity() {
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //        if (requestCode == REQUEST_IMAGE_CODE) {
-//            uri = data?.data
-//            Log.e("uri", uri.toString())
-//            try {
-//                bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-//                Log.e("bitMap", bitMap.toString())
-//                itemImage.setImageBitmap(bitMap)
-//                Log.e("itemImage", itemImage.toString())
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
+//        uriInfo = data?.data
+//        Log.e("uri", uriInfo.toString())
+//        try {
+//            bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uriInfo)
+//            Log.e("bitMap", bitMap.toString())
+//            itemImage.setImageBitmap(bitMap)
+//            Log.e("itemImage", itemImage.toString())
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
 //
 //        }
+//        Log.e("check", "$requestCode")
 //    }
 
     private fun requestPermissions(): Boolean {

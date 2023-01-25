@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,9 +28,9 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var db: AppDatabase
     lateinit var diaryDao: DiaryDao
     private var REQUEST_IMAGE_CODE = 1001
-    private var uri: Uri? = null
+    private var uriInfo: Uri? = null
     lateinit var itemImage: ImageView
-    lateinit var bitMap: Bitmap
+    var bitMap: Bitmap? = null
 
 //    private val permissionList = arrayOf(
 //        Manifest.permission.CAMERA,
@@ -40,7 +41,6 @@ class AddItemActivity : AppCompatActivity() {
 //    private val requestMultiplePermission =
 //        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
 //            result.forEach {
-//                Log.e("test", result.toString())
 //                if (!it.value) {
 //                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT)
 //                        .show()
@@ -49,8 +49,10 @@ class AddItemActivity : AppCompatActivity() {
 //            }
 //        }
 
+    // 파일 불러오기
     private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         binding.imgLoad.load(uri)
+        uriInfo = uri
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,25 +68,28 @@ class AddItemActivity : AppCompatActivity() {
 
         }
         binding.btnCompletion.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, REQUEST_IMAGE_CODE)
-            insertItem(uri)
+//            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//            startActivityForResult(intent, REQUEST_IMAGE_CODE)
+            insertItem()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CODE) {
-            uri = data?.data
-            try {
-                bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                itemImage.setImageBitmap(bitMap)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == REQUEST_IMAGE_CODE) {
+//            uri = data?.data
+//            Log.e("uri", uri.toString())
+//            try {
+//                bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+//                Log.e("bitMap", bitMap.toString())
+//                itemImage.setImageBitmap(bitMap)
+//                Log.e("itemImage", itemImage.toString())
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+//
+//        }
+//    }
 
     private fun requestPermissions(): Boolean {
         if (ContextCompat.checkSelfPermission(
@@ -161,8 +166,9 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertItem(uri: Uri?) {
-        val itemImage = Converter().toByteArray(bitMap)
+    private fun insertItem() {
+        Log.e("test", uriInfo.toString())
+        val itemImage = uriInfo.toString()
         val itemTitle = binding.editTitle.text.toString()
         val itemContent = binding.editContent.text.toString()
         if (itemTitle.isBlank() || itemContent.isBlank()) {

@@ -1,10 +1,13 @@
 package com.example.sunflower_jm.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sunflower_jm.DiffUtilCallback
 import com.example.sunflower_jm.OnItemLongClickListener
 import com.example.sunflower_jm.databinding.ItemBinding
@@ -28,6 +31,7 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
 
     class MyViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
+//        val image: ImageView = binding.itemImage
 
         fun bind(item: DiaryEntity) {
             binding.data = item
@@ -49,6 +53,11 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(itemList[position])
+
+//        holder.apply {
+//            Glide.with(root.context).load(itemList[position].image)
+//                .into(image)
+//        }
 
         holder.root.setOnLongClickListener {
             listener.onLongClick(itemList[position])

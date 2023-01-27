@@ -2,6 +2,7 @@ package com.example.sunflower_jm.activity
 
 import android.Manifest
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -28,10 +29,7 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var binding: AddItemBinding
     lateinit var db: AppDatabase
     lateinit var diaryDao: DiaryDao
-//    private var REQUEST_IMAGE_CODE = 1001
     private var uriInfo: Uri? = null
-//    lateinit var itemImage: ImageView
-//    var bitMap: Bitmap? = null
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
@@ -51,9 +49,17 @@ class AddItemActivity : AppCompatActivity() {
         }
 
     // 파일 불러오기
-    private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        Glide.with(this).load(uri).into(binding.imgLoad)
-        uriInfo = uri
+//    private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+//        Glide.with(this).load(uri).into(binding.imgLoad)
+//        uriInfo = uri
+//    }
+    private val readImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it.data?.data?.let { uri ->
+                contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+                Glide.with(this).load(uri).into(binding.imgLoad)
+                uriInfo = uri
+
+            }
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -65,108 +71,16 @@ class AddItemActivity : AppCompatActivity() {
         diaryDao = db.getDiaryDao()
 //        requestPermissions()
         requestMultiplePermission.launch(permissionList)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
 
         binding.btnAddImage.setOnClickListener {
-            readImage.launch("image/*")
+            readImage.launch(intent)
         }
         binding.btnCompletion.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//            startActivityForResult(intent, REQUEST_IMAGE_CODE)
             insertItem()
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQUEST_IMAGE_CODE) {
-//        uriInfo = data?.data
-//        Log.e("uri", uriInfo.toString())
-//        try {
-//            bitMap = MediaStore.Images.Media.getBitmap(contentResolver, uriInfo)
-//            Log.e("bitMap", bitMap.toString())
-//            itemImage.setImageBitmap(bitMap)
-//            Log.e("itemImage", itemImage.toString())
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        }
-//        Log.e("check", "$requestCode")
-//    }
-
-//    private fun requestPermissions(): Boolean {
-//        if (ContextCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.CAMERA
-//            ) == PackageManager.PERMISSION_GRANTED
-//            && ContextCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.READ_EXTERNAL_STORAGE
-//            ) == PackageManager.PERMISSION_GRANTED
-//            && ContextCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            ) == PackageManager.PERMISSION_GRANTED
-//        ) {
-//            return true
-//        }
-//
-//        val permissions = arrayOf(
-//            Manifest.permission.CAMERA,
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//            )
-//
-//        ActivityCompat.requestPermissions(this, permissions, 0)
-//        return false
-//    }
-//
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//
-//        when (requestCode) {
-//            0 -> {
-//                if (grantResults.isNotEmpty()) {
-//                    var isAllGranted = true
-//                    // 요청한 권한 허용/거부 상태 한번에 체크
-//                    for (grant in grantResults) {
-//                        if (grant != PackageManager.PERMISSION_GRANTED) {
-//                            isAllGranted = false
-//                            break;
-//                        }
-//                    }
-//                    // 요청한 권한을 모두 허용했음.
-//                    if (isAllGranted) {
-//                        // 다음 step으로 ~
-//                    }
-//                    // 허용하지 않은 권한이 있음. 필수권한/선택권한 여부에 따라서 별도 처리를 해주어야 함.
-//                    else {
-//                        if (!ActivityCompat.shouldShowRequestPermissionRationale(
-//                                this,
-//                                Manifest.permission.READ_EXTERNAL_STORAGE
-//                            )
-//                            || !ActivityCompat.shouldShowRequestPermissionRationale(
-//                                this,
-//                                Manifest.permission.CAMERA
-//                            )
-//                            || !ActivityCompat.shouldShowRequestPermissionRationale(
-//                                this,
-//                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                            )
-//                        ) {
-//                            // 다시 묻지 않기 체크하면서 권한 거부 되었음.
-//                        } else {
-//                            // 접근 권한 거부하였음.
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     private fun insertItem() {
         val itemImage = uriInfo.toString()

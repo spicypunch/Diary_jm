@@ -59,7 +59,8 @@ class DetailActivity : AppCompatActivity() {
         GC가 할 일이 늘어나게 됨
          */
         item = intent.getSerializableExtra("data") as DiaryEntity
-        Glide.with(this).load(item.image).into(binding.detailImage)
+
+        binding.detailImage.setImageURI(Uri.parse(item.image))
         binding.detailTitle.text = item.title
         binding.detailContent.text = item.content
 

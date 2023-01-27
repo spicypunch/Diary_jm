@@ -24,7 +24,7 @@
             android:src="@drawable/sample"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:imageUrl="@{data.image}" />
+            app:imageUri="@{data.image}" />
 
         <TextView
             android:id="@+id/item_title"

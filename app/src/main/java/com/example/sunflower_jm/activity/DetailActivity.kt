@@ -1,13 +1,18 @@
 package com.example.sunflower_jm.activity
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.sunflower_jm.databinding.DetailViewBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.DiaryEntity
 import com.example.sunflower_jm.DetailActivityContract
+import com.example.sunflower_jm.R
 
 class DetailActivity : AppCompatActivity() {
 
@@ -54,6 +59,7 @@ class DetailActivity : AppCompatActivity() {
         GC가 할 일이 늘어나게 됨
          */
         item = intent.getSerializableExtra("data") as DiaryEntity
+        Glide.with(this).load(item.image).into(binding.detailImage)
         binding.detailTitle.text = item.title
         binding.detailContent.text = item.content
 

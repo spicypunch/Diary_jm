@@ -9,10 +9,6 @@ import com.example.sunflower_jm.activity.UpdateItemActivity
 
 class DetailActivityContract : ActivityResultContract<DiaryEntity, HashMap<String, String>?>() {
 
-    /*
-     다른 액티비티를 호출하기 위한 인텐트를 생성, 제네릭 타입 I가 인텐트를 생성하기 위한 매개변수 타입으로 전달
-     startActivityForResult 메서드 호출을 대체
-     */
     override fun createIntent(context: Context, input: DiaryEntity): Intent {
         return UpdateItemActivity.getIntent(context, input)
 //        return Intent(context, UpdateItemActivity::class.java).apply {

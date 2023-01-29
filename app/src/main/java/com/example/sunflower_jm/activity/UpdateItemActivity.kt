@@ -1,21 +1,29 @@
 package com.example.sunflower_jm.activity
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.sunflower_jm.R
 import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.DiaryEntity
 import com.example.sunflower_jm.pattern.UpdateContract
 import com.example.sunflower_jm.pattern.UpdatePresenter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
 
@@ -45,6 +53,13 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         }
     }
 
+    private val getTakePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) {
+            if (it) {
+                uriInfo.let { binding.imgLoad.setImageURI(uriInfo) }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,7 +73,7 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         getIntent.type = "image/*"
 
         binding.btnAddImage.setOnClickListener {
-            readImage.launch(getIntent)
+            openDialog(this)
         }
 
         binding.btnUpdateCompletion.setOnClickListener {
@@ -86,6 +101,39 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("result", map)
         })
+    }
+
+    private fun openDialog(context: Context) {
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
+        val dialogBuild = AlertDialog.Builder(context).apply {
+            setView(dialogLayout)
+        }
+        val dialog = dialogBuild.create().apply { show() }
+
+        val cameraAddBtn = dialogLayout.findViewById<Button>(R.id.btn_camera)
+        val fileAddBtn = dialogLayout.findViewById<Button>(R.id.btn_file)
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+
+        cameraAddBtn.setOnClickListener {
+            uriInfo = createImageFile()
+            getTakePicture.launch(uriInfo)
+            dialog.dismiss()
+        }
+        fileAddBtn.setOnClickListener {
+            readImage.launch(intent)
+            dialog.dismiss()
+        }
+    }
+
+    private fun createImageFile(): Uri? {
+        val now = SimpleDateFormat("yyMMdd_HHmmss").format(Date())
+        val content = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        }
+        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
     }
 
     companion object {

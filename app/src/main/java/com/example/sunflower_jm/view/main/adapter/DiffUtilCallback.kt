@@ -1,7 +1,7 @@
-package com.example.sunflower_jm
+package com.example.sunflower_jm.view.main.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.db.model.DiaryEntity
 
 class DiffUtilCallback(
     private val oldList: MutableList<DiaryEntity>,

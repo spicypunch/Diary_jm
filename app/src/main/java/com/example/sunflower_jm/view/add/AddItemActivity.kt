@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.activity
+package com.example.sunflower_jm.view.add
 
 import android.Manifest
 import android.content.ContentValues
@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,12 +17,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.sunflower_jm.R
-import com.example.sunflower_jm.pattern.DialogPresenter
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.databinding.AddItemBinding
-import com.example.sunflower_jm.db.DiaryEntity
-import com.example.sunflower_jm.pattern.DialogContract
+import com.example.sunflower_jm.db.model.DiaryEntity
 import java.text.SimpleDateFormat
 import java.util.*
 

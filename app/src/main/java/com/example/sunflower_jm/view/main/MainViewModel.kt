@@ -1,10 +1,10 @@
-package com.example.sunflower_jm.pattern
+package com.example.sunflower_jm.view.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.db.model.DiaryEntity
 import com.example.sunflower_jm.db.DiaryDao
 
 class MainViewModel(private val diaryDao: DiaryDao): ViewModel() {

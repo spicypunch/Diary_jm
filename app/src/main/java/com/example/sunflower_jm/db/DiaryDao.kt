@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.sunflower_jm.db.model.DiaryEntity
 
 /*
 데이터 접근 객체

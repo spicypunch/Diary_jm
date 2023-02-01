@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.activity
+package com.example.sunflower_jm.view.detail
 
 import android.net.Uri
 import android.os.Bundle
@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.sunflower_jm.databinding.DetailViewBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
-import com.example.sunflower_jm.db.DiaryEntity
-import com.example.sunflower_jm.DetailActivityContract
+import com.example.sunflower_jm.db.model.DiaryEntity
+import com.example.sunflower_jm.view.update.ActivityContract
 
 class DetailActivity : AppCompatActivity() {
 
@@ -19,7 +19,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var item: DiaryEntity
 
     private val getList: ActivityResultLauncher<DiaryEntity> =
-        registerForActivityResult(DetailActivityContract()) { result: HashMap<String, String>? ->
+        registerForActivityResult(ActivityContract()) { result: HashMap<String, String>? ->
             result?.let {
                 if (it.get("image") != "null") {
                     binding.detailImage.setImageURI(Uri.parse(it.get("image")))

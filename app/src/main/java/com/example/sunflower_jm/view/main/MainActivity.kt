@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.activity
+package com.example.sunflower_jm.view.main
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,13 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.sunflower_jm.OnItemLongClickListener
+import com.example.sunflower_jm.view.main.adapter.OnItemLongClickListener
 import com.example.sunflower_jm.R
-import com.example.sunflower_jm.adapter.RecyclerViewAdapter
+import com.example.sunflower_jm.view.main.adapter.RecyclerViewAdapter
 import com.example.sunflower_jm.databinding.ActivityMainBinding
 import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.DiaryEntity
-import com.example.sunflower_jm.pattern.MainViewModel
+import com.example.sunflower_jm.db.model.DiaryEntity
+import com.example.sunflower_jm.view.add.AddItemActivity
 
 class MainActivity : AppCompatActivity(), OnItemLongClickListener {
 

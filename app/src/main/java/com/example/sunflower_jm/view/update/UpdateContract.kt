@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.pattern
+package com.example.sunflower_jm.view.update
 
 interface UpdateContract {
     interface View {

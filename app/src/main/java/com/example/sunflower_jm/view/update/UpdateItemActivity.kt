@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.activity
+package com.example.sunflower_jm.view.update
 
 import android.app.Activity
 import android.content.ContentValues
@@ -18,9 +18,7 @@ import com.example.sunflower_jm.R
 import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
-import com.example.sunflower_jm.db.DiaryEntity
-import com.example.sunflower_jm.pattern.UpdateContract
-import com.example.sunflower_jm.pattern.UpdatePresenter
+import com.example.sunflower_jm.db.model.DiaryEntity
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap

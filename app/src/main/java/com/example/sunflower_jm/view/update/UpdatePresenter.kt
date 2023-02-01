@@ -1,8 +1,8 @@
-package com.example.sunflower_jm.pattern
+package com.example.sunflower_jm.view.update
 
 import android.net.Uri
 import com.example.sunflower_jm.db.DiaryDao
-import com.example.sunflower_jm.db.DiaryEntity
+import com.example.sunflower_jm.db.model.DiaryEntity
 
 class UpdatePresenter(
     private val id: Int,

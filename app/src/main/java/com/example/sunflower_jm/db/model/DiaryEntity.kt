@@ -1,4 +1,4 @@
-package com.example.sunflower_jm.db
+package com.example.sunflower_jm.db.model
 
 import android.graphics.Bitmap
 import android.net.Uri

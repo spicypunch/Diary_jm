@@ -2,6 +2,7 @@ package com.example.sunflower_jm.db
 
 import android.content.Context
 import androidx.room.*
+import com.example.sunflower_jm.db.model.DiaryEntity
 
 /*
 Room 데이터베이스 클래스는 3가지 조건이 만족되어야 함

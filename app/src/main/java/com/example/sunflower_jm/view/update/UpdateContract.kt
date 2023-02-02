@@ -1,15 +1,22 @@
 package com.example.sunflower_jm.view.update
 
+import android.net.Uri
+import com.example.sunflower_jm.db.model.DiaryEntity
+
 interface UpdateContract {
     interface View {
-        fun finishActivity(message: String)
+        fun showToast(message: String)
 
-        fun sendResult(map: HashMap<String, String>)
+        fun finish(map: HashMap<String, String>)
+
+        fun updateItem(title: String, content: String, image: String?)
     }
 
     interface Presenter {
-        fun updateContent()
+        fun updateContent(itemTitle: String, itemContent: String)
 
-        fun makeMap()
+        fun updateItem(item: DiaryEntity)
+
+        fun updateUri(uriInfo: Uri)
     }
 }

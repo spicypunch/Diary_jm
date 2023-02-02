@@ -24,16 +24,13 @@ import com.example.sunflower_jm.db.model.DiaryEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddItemActivity : AppCompatActivity(), DialogContract.View {
+class AddItemActivity : AppCompatActivity() {
 
     lateinit var binding: AddItemBinding
     lateinit var db: AppDatabase
     lateinit var diaryDao: DiaryDao
     private var uriInfo: Uri? = null
 
-    private val dialogPresenter by lazy {
-        DialogPresenter(this, binding.imgLoad)
-    }
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
@@ -85,10 +82,6 @@ class AddItemActivity : AppCompatActivity(), DialogContract.View {
         binding.btnCompletion.setOnClickListener {
             insertItem()
         }
-    }
-
-    override fun setUri(uri: Uri?) {
-        uriInfo = uri
     }
 
     private fun insertItem() {

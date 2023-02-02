@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.sunflower_jm.R
 import com.example.sunflower_jm.databinding.UpdateItemBinding
 import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.model.DiaryEntity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,36 +24,34 @@ import kotlin.collections.HashMap
 
 class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
 
-    lateinit var binding: UpdateItemBinding
-    lateinit var db: AppDatabase
-    lateinit var diaryDao: DiaryDao
+    private lateinit var binding: UpdateItemBinding
     private var uriInfo: Uri? = null
-
-    private lateinit var item: DiaryEntity
 
     private val presenter by lazy {
         UpdatePresenter(
-            item.id!!,
-            uriInfo,
-            binding.editTitle.text.toString(),
-            binding.editContent.text.toString(),
-            diaryDao,
+            AppDatabase.getInstance(this)!!.getDiaryDao(),
             this
         )
     }
 
-    private val readImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        it.data?.data?.let { uri ->
-            contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            Glide.with(this).load(uri).into(binding.imgLoad)
-            uriInfo = uri
+    private val readImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it.data?.data?.let { uri ->
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                Glide.with(this).load(uri).into(binding.imgLoad)
+                presenter.updateUri(uri)
+            }
         }
-    }
 
     private val getTakePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) {
             if (it) {
                 uriInfo.let { binding.imgLoad.setImageURI(uriInfo) }
+                presenter.updateUri(uriInfo!!)
+
             }
         }
 
@@ -64,46 +61,43 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         binding = UpdateItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = AppDatabase.getInstance(this)!!
-        diaryDao = db.getDiaryDao()
-
         val getIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         getIntent.type = "image/*"
 
         binding.btnAddImage.setOnClickListener {
-            openDialog(this)
+            openDialog()
         }
 
         binding.btnUpdateCompletion.setOnClickListener {
-            if (binding.editTitle.text.isBlank() || binding.editContent.text.isBlank()) {
-                Toast.makeText(this, "모든 항목을 채워주세요!", Toast.LENGTH_SHORT).show()
-            } else {
-                presenter.updateContent()
-            }
+            presenter.updateContent(
+                binding.editTitle.text.toString(),
+                binding.editContent.text.toString(),
+            )
         }
 
-        item = intent.getSerializableExtra(KEY_DATA) as DiaryEntity
-
-        binding.imgLoad.setImageURI(Uri.parse(item.image))
-        binding.editTitle.text = Editable.Factory.getInstance().newEditable(item.title)
-        binding.editContent.text = Editable.Factory.getInstance().newEditable(item.content)
+        presenter.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
     }
 
-    override fun finishActivity(message: String) {
+    override fun updateItem(title: String, content: String, image: String?) {
+        binding.imgLoad.setImageURI(Uri.parse(image))
+        binding.editTitle.text = Editable.Factory.getInstance().newEditable(title)
+        binding.editContent.text = Editable.Factory.getInstance().newEditable(content)
+    }
+
+    override fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        presenter.makeMap()
-        finish()
     }
 
-    override fun sendResult(map: HashMap<String, String>) {
+    override fun finish(map: HashMap<String, String>) {
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("result", map)
         })
+        finish()
     }
 
-    private fun openDialog(context: Context) {
+    private fun openDialog() {
         val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
-        val dialogBuild = AlertDialog.Builder(context).apply {
+        val dialogBuild = AlertDialog.Builder(this).apply {
             setView(dialogLayout)
         }
         val dialog = dialogBuild.create().apply { show() }
@@ -126,7 +120,7 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
     }
 
     private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmmss").format(Date())
+        val now = SimpleDateFormat("yyMMdd_HHmmss", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")

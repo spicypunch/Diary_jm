@@ -72,10 +72,9 @@ class AddItemActivity : AppCompatActivity() {
         setContentView(binding.root)
         db = AppDatabase.getInstance(this)!!
         diaryDao = db.getDiaryDao()
-        requestMultiplePermission.launch(permissionList)
 
         binding.btnAddImage.setOnClickListener {
-//            dialogPresenter.openDialog(this)
+            requestMultiplePermission.launch(permissionList)
             openDialog(this)
         }
 

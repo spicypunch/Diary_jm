@@ -74,6 +74,8 @@ class UpdateItemActivity : AppCompatActivity() {
             )
         }
 
+        viewModel.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
+
         viewModel.message.observe(this, androidx.lifecycle.Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
@@ -90,9 +92,6 @@ class UpdateItemActivity : AppCompatActivity() {
             binding.editTitle.text = Editable.Factory.getInstance().newEditable(it.title)
             binding.editContent.text = Editable.Factory.getInstance().newEditable(it.content)
         })
-
-
-        viewModel.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
     }
 
     private fun openDialog() {

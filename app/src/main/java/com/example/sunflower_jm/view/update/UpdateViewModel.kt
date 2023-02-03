@@ -1,14 +1,11 @@
 package com.example.sunflower_jm.view.update
 
-import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.model.DiaryEntity
-import com.example.sunflower_jm.view.detail.DetailActivity
-import com.example.sunflower_jm.view.main.MainActivity
 
 class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
 
@@ -29,6 +26,7 @@ class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
         get() = _item
 
     fun updateItem(item: DiaryEntity) {
+        this.id = item.id
         _item.value = item
     }
 
@@ -37,11 +35,11 @@ class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
     }
 
     fun updateContent(itemTitle: String, itemContent: String) {
+
         if (itemTitle.isBlank() || itemContent.isBlank()) {
             _message.value = "모든 항목을 채워주세요!"
             return
         }
-
         Thread {
             diaryDao.updateItem(DiaryEntity(id, uriInfo.toString(), itemTitle, itemContent))
         }.start()

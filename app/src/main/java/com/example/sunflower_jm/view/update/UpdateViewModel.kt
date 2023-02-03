@@ -1,42 +1,49 @@
 package com.example.sunflower_jm.view.update
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.model.DiaryEntity
 
-class UpdatePresenter(
-    private val diaryDao: DiaryDao,
-    private val view: UpdateContract.View
-) : UpdateContract.Presenter {
+class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
 
     private var id: Int? = null
 
     private var uriInfo: Uri? = null
 
-    override fun updateItem(item: DiaryEntity) {
-        id = item.id
+    private var _message = MutableLiveData<String>()
+    val message: LiveData<String>
+        get() = _message
 
-        view.updateItem(
+    private var _map = MutableLiveData<HashMap<String, String>>()
+    val map: LiveData<HashMap<String, String>>
+        get() = _map
+
+    fun updateItem(item: DiaryEntity) {
+        id = item.id
+        updateActivity.updateItem(
             title = item.title,
             content = item.content,
             image = item.image,
         )
     }
 
-    override fun updateUri(uriInfo: Uri) {
+    fun updateUri(uriInfo: Uri) {
         this.uriInfo = uriInfo
     }
 
-    override fun updateContent(itemTitle: String, itemContent: String) {
+    fun updateContent(itemTitle: String, itemContent: String) {
         if (itemTitle.isBlank() || itemContent.isBlank()) {
-            view.showToast("모든 항목을 채워주세요!")
+            _message.value = "모든 항목을 채워주세요!"
             return
         }
 
         Thread {
             diaryDao.updateItem(DiaryEntity(id, uriInfo.toString(), itemTitle, itemContent))
         }.start()
-        view.showToast("수정되었습니다.")
+        _message.value = "수정되었습니다."
         makeMap(uriInfo, itemTitle, itemContent)
     }
 
@@ -46,7 +53,7 @@ class UpdatePresenter(
             "title" to itemTitle,
             "content" to itemContent
         )
-        view.finish(map)
+        _map.value = map
     }
 
 

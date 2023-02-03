@@ -22,15 +22,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
-class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
+class UpdateItemActivity : AppCompatActivity() {
 
     private lateinit var binding: UpdateItemBinding
     private var uriInfo: Uri? = null
 
-    private val presenter by lazy {
-        UpdatePresenter(
+    private val viewModel by lazy {
+        UpdateViewModel(
             AppDatabase.getInstance(this)!!.getDiaryDao(),
-            this
         )
     }
 
@@ -42,7 +41,7 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
                 Glide.with(this).load(uri).into(binding.imgLoad)
-                presenter.updateUri(uri)
+                viewModel.updateUri(uri)
             }
         }
 
@@ -50,7 +49,7 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         registerForActivityResult(ActivityResultContracts.TakePicture()) {
             if (it) {
                 uriInfo.let { binding.imgLoad.setImageURI(uriInfo) }
-                presenter.updateUri(uriInfo!!)
+                viewModel.updateUri(uriInfo!!)
 
             }
         }
@@ -69,26 +68,26 @@ class UpdateItemActivity : AppCompatActivity(), UpdateContract.View {
         }
 
         binding.btnUpdateCompletion.setOnClickListener {
-            presenter.updateContent(
+            viewModel.updateContent(
                 binding.editTitle.text.toString(),
                 binding.editContent.text.toString(),
             )
         }
 
-        presenter.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
+        viewModel.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
     }
 
-    override fun updateItem(title: String, content: String, image: String?) {
+    fun updateItem(title: String, content: String, image: String?) {
         binding.imgLoad.setImageURI(Uri.parse(image))
         binding.editTitle.text = Editable.Factory.getInstance().newEditable(title)
         binding.editContent.text = Editable.Factory.getInstance().newEditable(content)
     }
 
-    override fun showToast(message: String) {
+    fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun finish(map: HashMap<String, String>) {
+    fun finish(map: HashMap<String, String>) {
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("result", map)
         })

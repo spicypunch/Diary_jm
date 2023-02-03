@@ -74,24 +74,25 @@ class UpdateItemActivity : AppCompatActivity() {
             )
         }
 
-        viewModel.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
-    }
-
-    fun updateItem(title: String, content: String, image: String?) {
-        binding.imgLoad.setImageURI(Uri.parse(image))
-        binding.editTitle.text = Editable.Factory.getInstance().newEditable(title)
-        binding.editContent.text = Editable.Factory.getInstance().newEditable(content)
-    }
-
-    fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun finish(map: HashMap<String, String>) {
-        setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra("result", map)
+        viewModel.message.observe(this, androidx.lifecycle.Observer {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
-        finish()
+
+        viewModel.map.observe(this, androidx.lifecycle.Observer {
+            setResult(Activity.RESULT_OK, Intent().apply {
+                putExtra("result", it)
+            })
+            finish()
+        })
+
+        viewModel.item.observe(this, androidx.lifecycle.Observer {
+            binding.imgLoad.setImageURI(Uri.parse(it.image))
+            binding.editTitle.text = Editable.Factory.getInstance().newEditable(it.title)
+            binding.editContent.text = Editable.Factory.getInstance().newEditable(it.content)
+        })
+
+
+        viewModel.updateItem(intent.getSerializableExtra(KEY_DATA) as DiaryEntity)
     }
 
     private fun openDialog() {

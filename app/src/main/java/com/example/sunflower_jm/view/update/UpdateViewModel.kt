@@ -1,11 +1,14 @@
 package com.example.sunflower_jm.view.update
 
+import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.db.model.DiaryEntity
+import com.example.sunflower_jm.view.detail.DetailActivity
+import com.example.sunflower_jm.view.main.MainActivity
 
 class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
 
@@ -21,13 +24,12 @@ class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
     val map: LiveData<HashMap<String, String>>
         get() = _map
 
+    private var _item = MutableLiveData<DiaryEntity>()
+    val item: LiveData<DiaryEntity>
+        get() = _item
+
     fun updateItem(item: DiaryEntity) {
-        id = item.id
-        updateActivity.updateItem(
-            title = item.title,
-            content = item.content,
-            image = item.image,
-        )
+        _item.value = item
     }
 
     fun updateUri(uriInfo: Uri) {

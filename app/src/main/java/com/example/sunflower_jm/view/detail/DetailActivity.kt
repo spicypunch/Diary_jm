@@ -45,8 +45,6 @@ class DetailActivity : AppCompatActivity() {
 
         item = intent.getSerializableExtra("data") as DiaryEntity
 
-
-        Log.e("이미지 확인2", item.image!!)
         if (item.image != "null") {
             binding.detailImage.setImageURI(Uri.parse(item.image))
         }

@@ -28,9 +28,11 @@ class AddItemActivity : AppCompatActivity() {
 
     lateinit var binding: AddItemBinding
     lateinit var db: AppDatabase
-    lateinit var diaryDao: DiaryDao
     private var uriInfo: Uri? = null
 
+    private val viewModel by lazy {
+        AddViewModel(AppDatabase.getInstance(this)!!.getDiaryDao())
+    }
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
@@ -70,8 +72,6 @@ class AddItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = AddItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        db = AppDatabase.getInstance(this)!!
-        diaryDao = db.getDiaryDao()
 
         binding.btnAddImage.setOnClickListener {
             requestMultiplePermission.launch(permissionList)
@@ -79,26 +79,23 @@ class AddItemActivity : AppCompatActivity() {
         }
 
         binding.btnCompletion.setOnClickListener {
-            insertItem()
+            viewModel.insertItem(
+                uriInfo.toString(),
+                binding.editTitle.text.toString(),
+                binding.editContent.text.toString()
+            )
         }
+
+        viewModel.success.observe(this, androidx.lifecycle.Observer {
+            if (!it) {
+                Toast.makeText(this, "모든 항목을 채워주세요!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "수정되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        })
     }
 
-    private fun insertItem() {
-        val itemImage = uriInfo.toString()
-        val itemTitle = binding.editTitle.text.toString()
-        val itemContent = binding.editContent.text.toString()
-        if (itemTitle.isBlank() || itemContent.isBlank()) {
-            Toast.makeText(this, "모든 항목을 채워주세요!!", Toast.LENGTH_SHORT).show()
-        } else {
-            Thread {
-                diaryDao.insertItem(DiaryEntity(null, itemImage, itemTitle, itemContent))
-                runOnUiThread {
-                    Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }.start()
-        }
-    }
     private fun openDialog(context: Context) {
         val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
         val dialogBuild = AlertDialog.Builder(context).apply {

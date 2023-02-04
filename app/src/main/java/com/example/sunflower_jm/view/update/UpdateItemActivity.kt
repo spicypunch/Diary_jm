@@ -56,12 +56,8 @@ class UpdateItemActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = UpdateItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val getIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        getIntent.type = "image/*"
 
         binding.btnAddImage.setOnClickListener {
             openDialog()

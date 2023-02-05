@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
     private val getList: ActivityResultLauncher<DiaryEntity> =
         registerForActivityResult(ActivityContract()) { result: HashMap<String, String>? ->
             result?.let {
-                if (it.get("image") != "null") {
+                if (it.get("image") != null) {
                     binding.detailImage.setImageURI(Uri.parse(it.get("image")))
                     item.image = it.get("image")
                 }

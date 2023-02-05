@@ -4,17 +4,17 @@ import android.content.Context
 import androidx.room.*
 import com.example.sunflower_jm.db.model.DiaryEntity
 
-@Database(entities = arrayOf(DiaryEntity::class), version = 1) //조건 1에 해당
-abstract class AppDatabase : RoomDatabase() { //조건 2에 해당
-    abstract fun getDiaryDao() : DiaryDao //조건 3에 해당
+@Database(entities = [DiaryEntity::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun getDiaryDao() : DiaryDao
 
     companion object {
-        val databaseName = "db_sunflower"
-        var appDatabase : AppDatabase? = null
+        private const val DATABASE = "db_sunflower"
+        private var appDatabase : AppDatabase? = null
 
         fun getInstance(context: Context) : AppDatabase? {
             if(appDatabase == null) {
-                appDatabase = Room.databaseBuilder(context, AppDatabase::class.java, databaseName).build()
+                appDatabase = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE).build()
             }
             return appDatabase
         }

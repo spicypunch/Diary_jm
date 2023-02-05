@@ -94,7 +94,6 @@ class AddItemActivity : AppCompatActivity() {
         })
     }
 
-
     private fun openDialog(context: Context) {
         val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
         val dialogBuild = AlertDialog.Builder(context).apply {

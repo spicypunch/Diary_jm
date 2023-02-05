@@ -13,15 +13,14 @@ class AddViewModel(private val diaryDao: DiaryDao) : ViewModel() {
         get() = _success
 
     fun insertItem(itemImage: String, itemTitle: String, itemContent: String) {
+
         if (itemTitle.isBlank() || itemContent.isBlank()) {
             _success.value = false
             return
-        } else {
-            Thread {
-                diaryDao.insertItem(DiaryEntity(null, itemImage, itemTitle, itemContent))
-            }.start()
-            _success.value = true
         }
-
+        Thread {
+            diaryDao.insertItem(DiaryEntity(null, itemImage, itemTitle, itemContent))
+        }.start()
+        _success.value = true
     }
 }

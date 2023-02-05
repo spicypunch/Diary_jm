@@ -11,8 +11,10 @@ object BindingConversions {
     @JvmStatic
     fun loadImage(imageView: ImageView, uri: String) {
         if (uri != "null") {
-            Glide.with(imageView.context).load(uri)
+            Glide.with(imageView.context)
+                .load(uri)
                 .error(R.drawable.error)
+                .placeholder(R.drawable.loading)
                 .into(imageView)
         }
     }

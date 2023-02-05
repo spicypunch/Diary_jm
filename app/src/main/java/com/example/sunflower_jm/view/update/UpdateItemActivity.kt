@@ -20,7 +20,6 @@ import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.model.DiaryEntity
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class UpdateItemActivity : AppCompatActivity() {
 
@@ -115,7 +114,7 @@ class UpdateItemActivity : AppCompatActivity() {
     }
 
     private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmmss", Locale.KOREA).format(Date())
+        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")

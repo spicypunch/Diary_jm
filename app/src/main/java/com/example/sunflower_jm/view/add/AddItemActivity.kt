@@ -1,6 +1,7 @@
 package com.example.sunflower_jm.view.add
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -26,8 +27,7 @@ import java.util.*
 
 class AddItemActivity : AppCompatActivity() {
 
-    lateinit var binding: AddItemBinding
-    lateinit var db: AppDatabase
+    private lateinit var binding: AddItemBinding
     private var uriInfo: Uri? = null
 
     private val viewModel by lazy {
@@ -44,11 +44,11 @@ class AddItemActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
             result.forEach {
                 if (!it.value) {
-                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
+            openDialog(this)
         }
 
     private val readImage =
@@ -67,7 +67,6 @@ class AddItemActivity : AppCompatActivity() {
             }
         }
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AddItemBinding.inflate(layoutInflater)
@@ -75,7 +74,6 @@ class AddItemActivity : AppCompatActivity() {
 
         binding.btnAddImage.setOnClickListener {
             requestMultiplePermission.launch(permissionList)
-            openDialog(this)
         }
 
         binding.btnCompletion.setOnClickListener {
@@ -95,6 +93,7 @@ class AddItemActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun openDialog(context: Context) {
         val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
@@ -121,7 +120,7 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmmss").format(Date())
+        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")

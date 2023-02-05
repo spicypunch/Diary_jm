@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.sunflower_jm.R
 import com.example.sunflower_jm.databinding.DetailViewBinding
 import com.example.sunflower_jm.db.AppDatabase
 import com.example.sunflower_jm.db.DiaryDao
@@ -13,9 +15,9 @@ import com.example.sunflower_jm.view.update.ActivityContract
 
 class DetailActivity : AppCompatActivity() {
 
-    lateinit var binding: DetailViewBinding
-    lateinit var diaryDao: DiaryDao
-    lateinit var db: AppDatabase
+    private lateinit var binding: DetailViewBinding
+    private lateinit var diaryDao: DiaryDao
+    private lateinit var db: AppDatabase
     private lateinit var item: DiaryEntity
 
     private val getList: ActivityResultLauncher<DiaryEntity> =
@@ -36,20 +38,13 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = DetailViewBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.detail_view)
 
         db = AppDatabase.getInstance(this)!!
         diaryDao = db.getDiaryDao()
 
         item = intent.getSerializableExtra("data") as DiaryEntity
-
-        if (item.image != "null") {
-            binding.detailImage.setImageURI(Uri.parse(item.image))
-        }
-        binding.detailTitle.text = item.title
-        binding.detailContent.text = item.content
+        binding.data = item
 
         binding.update.setOnClickListener {
             getList.launch(item)

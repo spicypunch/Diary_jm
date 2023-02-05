@@ -26,9 +26,9 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
 
     class MyViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
+
         fun bind(item: DiaryEntity) {
             binding.data = item
-
             itemView.setOnClickListener {
                 Intent(root.context, DetailActivity::class.java).apply {
                     putExtra("data", item)

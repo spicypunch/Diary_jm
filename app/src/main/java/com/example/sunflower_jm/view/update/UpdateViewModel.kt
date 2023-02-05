@@ -1,6 +1,7 @@
 package com.example.sunflower_jm.view.update
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +36,7 @@ class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
     }
 
     fun updateContent(itemTitle: String, itemContent: String) {
-
+        Log.e("@@@@@@@@@", uriInfo.toString())
         if (itemTitle.isBlank() || itemContent.isBlank()) {
             _message.value = "모든 항목을 채워주세요!"
             return

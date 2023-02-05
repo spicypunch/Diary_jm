@@ -12,7 +12,7 @@ class AddViewModel(private val diaryDao: DiaryDao) : ViewModel() {
     val success: LiveData<Boolean>
         get() = _success
 
-    fun insertItem(itemImage: String, itemTitle: String, itemContent: String) {
+    fun insertItem(itemImage: String?, itemTitle: String, itemContent: String) {
 
         if (itemTitle.isBlank() || itemContent.isBlank()) {
             _success.value = false

@@ -83,9 +83,14 @@ class UpdateItemActivity : AppCompatActivity() {
         })
 
         viewModel.item.observe(this, androidx.lifecycle.Observer {
-            binding.imgLoad.setImageURI(Uri.parse(it.image))
-            binding.editTitle.text = Editable.Factory.getInstance().newEditable(it.title)
-            binding.editContent.text = Editable.Factory.getInstance().newEditable(it.content)
+            if (viewModel.item.value?.image != null) {
+                binding.imgLoad.setImageURI(Uri.parse(it.image))
+                binding.editTitle.text = Editable.Factory.getInstance().newEditable(it.title)
+                binding.editContent.text = Editable.Factory.getInstance().newEditable(it.content)
+            } else {
+                binding.editTitle.text = Editable.Factory.getInstance().newEditable(it.title)
+                binding.editContent.text = Editable.Factory.getInstance().newEditable(it.content)
+            }
         })
     }
 

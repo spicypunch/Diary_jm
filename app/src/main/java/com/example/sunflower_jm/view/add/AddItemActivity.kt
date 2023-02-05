@@ -78,7 +78,7 @@ class AddItemActivity : AppCompatActivity() {
 
         binding.btnCompletion.setOnClickListener {
             viewModel.insertItem(
-                uriInfo.toString(),
+                uriInfo?.toString(),
                 binding.editTitle.text.toString(),
                 binding.editContent.text.toString()
             )

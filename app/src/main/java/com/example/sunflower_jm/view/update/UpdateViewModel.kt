@@ -42,7 +42,7 @@ class UpdateViewModel(private val diaryDao: DiaryDao) : ViewModel() {
             return
         }
         Thread {
-            diaryDao.updateItem(DiaryEntity(id, uriInfo.toString(), itemTitle, itemContent))
+            diaryDao.updateItem(DiaryEntity(id, uriInfo?.toString(), itemTitle, itemContent))
         }.start()
         _message.value = "수정되었습니다."
         makeMap(uriInfo, itemTitle, itemContent)

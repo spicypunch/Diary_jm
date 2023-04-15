@@ -88,7 +88,7 @@ class AddItemActivity : AppCompatActivity() {
             if (!it) {
                 Toast.makeText(this, "모든 항목을 채워주세요!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "수정되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "추가되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
         })

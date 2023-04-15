@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), OnItemLongClickListener {
         viewModel.obtainLoadItems()
 
         viewModel.items.observe(this, Observer {
-            adapter.updateList(viewModel.items.value as MutableList<DiaryEntity>)
+            adapter.submitList(it)
         })
     }
 

@@ -35,6 +35,11 @@ class RecyclerViewAdapter(private val listener : OnItemLongClickListener) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(currentList[position])
+
+        holder.root.setOnLongClickListener {
+            listener.onLongClick(currentList[position])
+            false
+        }
     }
 
     companion object {

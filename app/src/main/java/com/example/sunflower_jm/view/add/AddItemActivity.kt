@@ -1,29 +1,25 @@
 package com.example.sunflower_jm.view.add
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.sunflower_jm.R
-import com.example.sunflower_jm.db.AppDatabase
-import com.example.sunflower_jm.db.DiaryDao
 import com.example.sunflower_jm.databinding.AddItemBinding
-import com.example.sunflower_jm.db.model.DiaryEntity
+import com.example.sunflower_jm.db.AppDatabase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class AddItemActivity : AppCompatActivity() {
 
